@@ -388,11 +388,40 @@
 <p class="text-gray-600 dark:text-gray-400 text-sm">Примітка: [Текст примітки буде додано пізніше]</p>
 </div>
 </div>
-<div class="mt-6 p-4 rounded-2xl hidden bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800" id="successMessage">
-<p class="text-center text-green-700 dark:text-green-400 font-bold text-lg">✓ Заявку успішно відправлено!</p>
+<!-- Success Modal -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300" id="successModal">
+<div class="relative mx-4 w-full max-w-md transform rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-2xl transition-all duration-300 scale-95" id="successModalContent">
+<div class="text-center">
+<div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30">
+<svg class="h-10 w-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+</svg>
 </div>
-<div class="mt-6 p-4 rounded-2xl hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800" id="errorMessage">
-<p class="text-center text-red-700 dark:text-red-400 font-bold text-lg">✗ Помилка відправки. Спробуйте ще раз.</p>
+<h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white">Успішно відправлено!</h3>
+<p class="mb-6 text-gray-600 dark:text-gray-400">Вашу заявку успішно надіслано. Ми зв'яжемося з вами найближчим часом.</p>
+<button class="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-white font-bold hover:bg-primary/90 transition-all duration-200" onclick="closeSuccessModal()">
+Зрозуміло
+</button>
+</div>
+</div>
+</div>
+
+<!-- Error Modal -->
+<div class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300" id="errorModal">
+<div class="relative mx-4 w-full max-w-md transform rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-2xl transition-all duration-300 scale-95" id="errorModalContent">
+<div class="text-center">
+<div class="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/30">
+<svg class="h-10 w-10 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+</svg>
+</div>
+<h3 class="mb-2 text-2xl font-bold text-gray-900 dark:text-white">Помилка відправки</h3>
+<p class="mb-6 text-gray-600 dark:text-gray-400">На жаль, виникла помилка при відправці. Будь ласка, спробуйте ще раз.</p>
+<button class="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-white font-bold hover:bg-primary/90 transition-all duration-200" onclick="closeErrorModal()">
+Спробувати знову
+</button>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -507,13 +536,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('applicationForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const successMsg = document.getElementById('successMessage');
-        const errorMsg = document.getElementById('errorMessage');
+        const successModal = document.getElementById('successModal');
+        const errorModal = document.getElementById('errorModal');
         const submitButton = e.target.querySelector('button[type="submit"]');
         
-        // Приховуємо попередні повідомлення
-        successMsg.classList.add('hidden');
-        errorMsg.classList.add('hidden');
+        // Приховуємо попередні модальні вікна
+        successModal.classList.add('hidden');
+        errorModal.classList.add('hidden');
         
         // Блокуємо кнопку та показуємо індикатор завантаження
         const originalButtonText = submitButton.innerHTML;
@@ -542,27 +571,17 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(function(response) {
             console.log('SUCCESS!', response.status, response.text);
             
-            // Показуємо повідомлення про успіх
-            successMsg.classList.remove('hidden');
+            // Показуємо модальне вікно успіху
+            showSuccessModal();
             
             // Очищаємо форму
             document.getElementById('applicationForm').reset();
-            
-            // Приховуємо повідомлення через 5 секунд
-            setTimeout(() => {
-                successMsg.classList.add('hidden');
-            }, 5000);
         })
         .catch(function(error) {
             console.error('FAILED...', error);
             
-            // Показуємо повідомлення про помилку
-            errorMsg.classList.remove('hidden');
-            
-            // Приховуємо повідомлення через 5 секунд
-            setTimeout(() => {
-                errorMsg.classList.add('hidden');
-            }, 5000);
+            // Показуємо модальне вікно помилки
+            showErrorModal();
         })
         .finally(function() {
             // Відновлюємо кнопку
@@ -570,6 +589,74 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.innerHTML = originalButtonText;
         });
     });
+});
+</script>
+
+<script>
+// Функції для модальних вікон
+function showSuccessModal() {
+    const modal = document.getElementById('successModal');
+    const content = document.getElementById('successModalContent');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
+}
+
+function closeSuccessModal() {
+    const modal = document.getElementById('successModal');
+    const content = document.getElementById('successModalContent');
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }, 200);
+}
+
+function showErrorModal() {
+    const modal = document.getElementById('errorModal');
+    const content = document.getElementById('errorModalContent');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
+}
+
+function closeErrorModal() {
+    const modal = document.getElementById('errorModal');
+    const content = document.getElementById('errorModalContent');
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }, 200);
+}
+
+// Закриття модального вікна при кліку поза ним
+document.getElementById('successModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeSuccessModal();
+    }
+});
+
+document.getElementById('errorModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeErrorModal();
+    }
+});
+
+// Закриття модального вікна клавішею Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeSuccessModal();
+        closeErrorModal();
+    }
 });
 </script>
 
