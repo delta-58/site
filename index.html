@@ -5,6 +5,7 @@
 <title>58-ма Бригада - Подати заявку</title>
 <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
 <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Work+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
     tailwind.config = {
@@ -244,27 +245,21 @@
 </div>
 <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-200 dark:border-gray-700">
 <form class="space-y-6" id="applicationForm">
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 <div>
-<label class="sr-only" for="first-name">Ім'я</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="first-name" name="first-name" placeholder="Ім'я" required type="text"/>
+<label class="sr-only" for="user-name">Повне ім'я</label>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="user-name" name="user_name" placeholder="Прізвище та ім'я" required type="text"/>
 </div>
 <div>
-<label class="sr-only" for="last-name">Прізвище</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="last-name" name="last-name" placeholder="Прізвище" required type="text"/>
-</div>
-</div>
-<div>
-<label class="sr-only" for="phone">Номер телефону</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="phone" name="phone" placeholder="+380 XX XXX XX XX" required type="tel"/>
+<label class="sr-only" for="user-phone">Номер телефону</label>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="user-phone" name="user_phone" placeholder="+380 XX XXX XX XX" required type="tel"/>
 </div>
 <div>
-<label class="sr-only" for="age">Вік</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="age" min="18" max="65" name="age" placeholder="Вік" required type="number"/>
+<label class="sr-only" for="user-age">Вік</label>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="user-age" min="18" max="65" name="user_age" placeholder="Вік" required type="number"/>
 </div>
 <div>
-<label class="sr-only" for="info">Додаткова інформація</label>
-<textarea class="form-textarea w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 p-4" id="info" name="info" placeholder="Додаткова інформація (досвід, навички, вакансія тощо)" rows="4"></textarea>
+<label class="sr-only" for="user-comment">Додаткова інформація</label>
+<textarea class="form-textarea w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 p-4" id="user-comment" name="user_comment" placeholder="Додаткова інформація (досвід, навички, вакансія тощо)" rows="4"></textarea>
 </div>
 <button class="inline-flex min-w-[160px] items-center justify-center overflow-hidden rounded-full h-14 px-8 bg-primary text-white text-lg font-bold shadow-xl hover:bg-primary/90 hover:scale-105 transition-all duration-300" type="submit">
 <span class="truncate">Відправити заявку</span>
@@ -384,34 +379,79 @@
 </div>
 
 <script>
-// Базова валідація форми
-document.getElementById('applicationForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const successMsg = document.getElementById('successMessage');
-    const errorMsg = document.getElementById('errorMessage');
-    
-    // Приховуємо попередні повідомлення
-    successMsg.classList.add('hidden');
-    errorMsg.classList.add('hidden');
-    
-    // Отримуємо дані форми
-    const formData = new FormData(this);
-    
-    // Тут буде логіка відправки на email
-    // Поки що просто показуємо повідомлення про успіх
-    console.log('Дані форми:', Object.fromEntries(formData));
-    
-    // Показуємо повідомлення про успіх
-    successMsg.classList.remove('hidden');
-    
-    // Очищаємо форму
-    this.reset();
-    
-    // Приховуємо повідомлення через 5 секунд
-    setTimeout(() => {
+// Ініціалізація EmailJS
+(function(){
+    emailjs.init("adTi5M6ATwOFELBCc"); // PUBLIC_KEY з .env
+})();
+
+// Обробка форми з EmailJS
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('applicationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const successMsg = document.getElementById('successMessage');
+        const errorMsg = document.getElementById('errorMessage');
+        const submitButton = e.target.querySelector('button[type="submit"]');
+        
+        // Приховуємо попередні повідомлення
         successMsg.classList.add('hidden');
-    }, 5000);
+        errorMsg.classList.add('hidden');
+        
+        // Блокуємо кнопку та показуємо індикатор завантаження
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="truncate">Відправляється...</span>';
+        
+        // Отримуємо дані форми через FormData
+        const formDataRaw = new FormData(e.target);
+        
+        // Формуємо об'єкт для EmailJS з правильними назвами полів
+        const templateParams = {
+            user_name: formDataRaw.get('user_name'),
+            user_phone: formDataRaw.get('user_phone'),
+            user_age: formDataRaw.get('user_age'),
+            user_comment: formDataRaw.get('user_comment')
+        };
+        
+        console.log('Відправляємо дані:', templateParams);
+        
+        // Відправляємо через EmailJS
+        emailjs.send(
+            'service_d4l1l1r',  // SERVICE_ID з .env
+            'template_649iuvp', // TEMPLATE_ID з .env
+            templateParams
+        )
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            
+            // Показуємо повідомлення про успіх
+            successMsg.classList.remove('hidden');
+            
+            // Очищаємо форму
+            document.getElementById('applicationForm').reset();
+            
+            // Приховуємо повідомлення через 5 секунд
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 5000);
+        })
+        .catch(function(error) {
+            console.error('FAILED...', error);
+            
+            // Показуємо повідомлення про помилку
+            errorMsg.classList.remove('hidden');
+            
+            // Приховуємо повідомлення через 5 секунд
+            setTimeout(() => {
+                errorMsg.classList.add('hidden');
+            }, 5000);
+        })
+        .finally(function() {
+            // Відновлюємо кнопку
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+        });
+    });
 });
 </script>
 
