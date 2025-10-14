@@ -470,6 +470,46 @@ document.addEventListener('click', function(event) {
         menu.classList.add('hidden');
     }
 });
+
+// Smooth scrolling for navigation links with offset
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                // Отримуємо висоту хедера
+                const header = document.querySelector('header');
+                const headerHeight = header ? header.offsetHeight : 80;
+                
+                // Зменшуємо offset, щоб назва секції з'являлася вище на екрані
+                // Віднімаємо 30px від висоти хедера для оптимального положення
+                const offset = headerHeight - 30;
+                
+                // Розраховуємо позицію з відступом
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                
+                // Плавна прокрутка
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Закриваємо мобільне меню після кліку
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+        });
+    });
+});
 </script>
 
 </body>
