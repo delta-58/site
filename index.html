@@ -30,6 +30,21 @@
       },
     }
   </script>
+<style>
+  /* Стилізація placeholder для select */
+  select option[disabled][selected] {
+    color: #9ca3af; /* gray-400 */
+  }
+  .dark select option[disabled][selected] {
+    color: #6b7280; /* gray-500 */
+  }
+  select:invalid {
+    color: #9ca3af; /* gray-400 */
+  }
+  .dark select:invalid {
+    color: #6b7280; /* gray-500 */
+  }
+</style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
@@ -357,35 +372,52 @@
 
 <section class="scroll-mt-24" id="apply">
 <div class="max-w-2xl mx-auto">
-<div class="text-center mb-12">
+<div class="text-center mb-10">
 <h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Подати заявку</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
-<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-200 dark:border-gray-700">
-<form class="space-y-6" id="applicationForm">
+<div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-6 md:p-10 border border-gray-200 dark:border-gray-700">
+<form class="space-y-5" id="applicationForm">
 <div>
 <label class="sr-only" for="user-name">Повне ім'я</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="user-name" name="user_name" placeholder="Прізвище та ім'я" required type="text"/>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-name" name="user_name" placeholder="ПІБ" required type="text"/>
 </div>
 <div>
 <label class="sr-only" for="user-phone">Номер телефону</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="user-phone" name="user_phone" placeholder="+380 XX XXX XX XX" required type="tel"/>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-phone" name="user_phone" placeholder="+380 XX XXX XX XX" required type="tel"/>
 </div>
 <div>
 <label class="sr-only" for="user-age">Вік</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-12 px-4" id="user-age" min="18" max="65" name="user_age" placeholder="Вік" required type="number"/>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-age" min="18" max="65" name="user_age" placeholder="Вік" required type="number"/>
+</div>
+<div>
+<label class="sr-only" for="user-status">Статус</label>
+<select class="form-select w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white h-11 px-4" id="user-status" name="user_status" required>
+<option value="" disabled selected hidden>Статус</option>
+<option value="цивільний">Цивільний</option>
+<option value="військовослужбовець">Військовослужбовець</option>
+<option value="сзч">СЗЧ</option>
+</select>
+</div>
+<div>
+<label class="sr-only" for="user-rank">Звання</label>
+<select class="form-select w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white h-11 px-4" id="user-rank" name="user_rank" required>
+<option value="" disabled selected hidden>Звання</option>
+<option value="відсутнє">Відсутнє</option>
+<option value="солдат">Солдат</option>
+<option value="сержант">Сержант</option>
+<option value="офіцер">Офіцер</option>
+</select>
 </div>
 <div>
 <label class="sr-only" for="user-comment">Додаткова інформація</label>
-<textarea class="form-textarea w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 p-4" id="user-comment" name="user_comment" placeholder="Додаткова інформація (досвід, навички, вакансія тощо)" rows="4"></textarea>
+<textarea class="form-textarea w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 p-3" id="user-comment" name="user_comment" placeholder="Додаткова інформація (досвід, навички, вакансія тощо)" rows="3"></textarea>
 </div>
-<button class="inline-flex min-w-[160px] items-center justify-center overflow-hidden rounded-full h-14 px-8 bg-primary text-white text-lg font-bold shadow-xl hover:bg-primary/90 hover:scale-105 transition-all duration-300" type="submit">
+<button class="inline-flex min-w-[160px] items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold shadow-xl hover:bg-primary/90 hover:scale-105 transition-all duration-300" type="submit">
 <span class="truncate">Відправити заявку</span>
 </button>
 </div>
 </form>
-<div class="mt-4 text-center">
-<p class="text-gray-600 dark:text-gray-400 text-sm">Примітка: [Текст примітки буде додано пізніше]</p>
 </div>
 </div>
 <!-- Success Modal -->
