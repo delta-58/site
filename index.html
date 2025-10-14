@@ -487,9 +487,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const header = document.querySelector('header');
                 const headerHeight = header ? header.offsetHeight : 80;
                 
-                // Зменшуємо offset, щоб назва секції з'являлася вище на екрані
-                // Віднімаємо 30px від висоти хедера для оптимального положення
-                const offset = headerHeight - 30;
+                // Віднімаємо 20px від висоти хедера для оптимального положення назви секції
+                const offset = headerHeight - 20;
                 
                 // Розраховуємо позицію з відступом
                 const elementPosition = targetElement.getBoundingClientRect().top;
