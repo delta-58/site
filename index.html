@@ -38,10 +38,10 @@
     .dark select option[disabled][selected] {
         color: #6b7280; /* gray-500 */
     }
-    select option {
+    select option:not([disabled]) {
         color: #fcd34d; /* amber-300 */
     }
-    .dark select option {
+    .dark select option:not([disabled]) {
         color: #fde68a; /* amber-200 */
     }
     select:invalid {
@@ -68,6 +68,168 @@
 <div class="flex items-center gap-3">
 <a class="hidden md:inline-flex text-lg font-semibold text-yellow-500 dark:text-yellow-200 hover:text-yellow-400 dark:hover:text-yellow-100 transition-colors duration-200" href="#apply">Подати заявку</a>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const lightOptionColor = '#fcd34d';
+    const darkOptionColor = '#fde68a';
+    const placeholderLight = '#9ca3af';
+    const placeholderDark = '#6b7280';
+
+    const enhancedSelects = document.querySelectorAll('[data-enhanced-select]');
+
+    function closeAllSelects(except = null) {
+        enhancedSelects.forEach(container => {
+            if (container === except) return;
+            const trigger = container.querySelector('[data-select-trigger]');
+            const list = container.querySelector('[data-select-options]');
+            if (trigger && list) {
+                trigger.setAttribute('aria-expanded', 'false');
+                list.classList.add('hidden');
+                const icon = trigger.querySelector('svg');
+                if (icon) {
+                    icon.classList.remove('rotate-180');
+                }
+            }
+        });
+    }
+
+    enhancedSelects.forEach(container => {
+        const select = container.querySelector('select');
+        if (!select || container.dataset.enhanced === 'true') return;
+        container.dataset.enhanced = 'true';
+
+        const isDarkMode = () => document.documentElement.classList.contains('dark');
+
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+    trigger.className = 'flex w-full h-11 items-center justify-between rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent px-4 text-left focus:outline-none focus:ring-2 focus:ring-primary';
+        trigger.setAttribute('data-select-trigger', '');
+        trigger.setAttribute('aria-haspopup', 'listbox');
+        trigger.setAttribute('aria-expanded', 'false');
+
+        const valueSpan = document.createElement('span');
+        valueSpan.setAttribute('data-select-value', '');
+        valueSpan.className = 'block truncate text-gray-400 dark:text-gray-500';
+        trigger.appendChild(valueSpan);
+
+        const caret = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        caret.setAttribute('viewBox', '0 0 24 24');
+        caret.setAttribute('fill', 'none');
+        caret.setAttribute('stroke', 'currentColor');
+        caret.setAttribute('stroke-width', '2');
+        caret.classList.add('ml-2', 'h-5', 'w-5', 'flex-shrink-0', 'text-[#fcd34d]', 'dark:text-[#fde68a]', 'transition-transform', 'duration-200');
+        const caretPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        caretPath.setAttribute('stroke-linecap', 'round');
+        caretPath.setAttribute('stroke-linejoin', 'round');
+        caretPath.setAttribute('d', 'M6 9l6 6 6-6');
+        caret.appendChild(caretPath);
+        trigger.appendChild(caret);
+
+    const list = document.createElement('ul');
+    list.className = 'absolute left-0 right-0 top-full z-20 mt-2 max-h-56 overflow-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 shadow-2xl hidden';
+        list.setAttribute('data-select-options', '');
+        list.setAttribute('role', 'listbox');
+
+    const options = Array.from(select.options);
+
+        options.forEach(option => {
+            if (option.disabled && option.hidden) {
+                return;
+            }
+
+            const item = document.createElement('li');
+            item.setAttribute('role', 'option');
+            item.setAttribute('data-option-value', option.value);
+            item.className = 'px-4 py-2 cursor-pointer text-[#fcd34d] dark:text-[#fde68a] hover:bg-primary/10 focus:bg-primary/10 focus:outline-none transition-colors duration-150';
+            item.textContent = option.textContent;
+
+            item.addEventListener('click', () => {
+                select.value = option.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                updateDisplay();
+                closeAllSelects();
+            });
+
+            item.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    item.click();
+                }
+            });
+
+            list.appendChild(item);
+        });
+
+        container.appendChild(trigger);
+        container.appendChild(list);
+
+        function updateDisplay() {
+            const currentOption = select.options[select.selectedIndex];
+            const isPlaceholder = !currentOption || currentOption.disabled || currentOption.value === '';
+            const optionColor = isDarkMode() ? darkOptionColor : lightOptionColor;
+            const placeholderColor = isDarkMode() ? placeholderDark : placeholderLight;
+
+            valueSpan.textContent = currentOption ? currentOption.textContent : '';
+            if (isPlaceholder) {
+                valueSpan.className = 'block truncate text-gray-400 dark:text-gray-500';
+            } else {
+                valueSpan.className = 'block truncate font-medium text-[#fcd34d] dark:text-[#fde68a]';
+            }
+
+            Array.from(list.children).forEach(item => {
+                if (item.getAttribute('data-option-value') === select.value) {
+                    item.classList.add('bg-primary/10');
+                } else {
+                    item.classList.remove('bg-primary/10');
+                }
+            });
+
+            if (isPlaceholder) {
+                select.style.color = placeholderColor;
+            } else {
+                select.style.color = optionColor;
+            }
+        }
+
+        trigger.addEventListener('click', event => {
+            event.preventDefault();
+            const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+            if (isOpen) {
+                trigger.setAttribute('aria-expanded', 'false');
+                list.classList.add('hidden');
+                caret.classList.remove('rotate-180');
+            } else {
+                closeAllSelects(container);
+                trigger.setAttribute('aria-expanded', 'true');
+                list.classList.remove('hidden');
+                caret.classList.add('rotate-180');
+            }
+        });
+
+        select.addEventListener('change', updateDisplay);
+
+        updateDisplay();
+        select.classList.add('hidden');
+
+        const themeObserver = new MutationObserver(updateDisplay);
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    });
+
+    document.addEventListener('click', event => {
+        const targetContainer = event.target.closest('[data-enhanced-select]');
+        closeAllSelects(targetContainer || null);
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeAllSelects();
+        }
+    });
+});
+</script>
 <!-- Mobile Menu Button -->
 <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -399,20 +561,18 @@
 <label class="sr-only" for="user-age">Вік</label>
 <input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-age" min="18" max="65" name="user_age" placeholder="Вік" required type="number"/>
 </div>
-<div class="relative">
+<div class="relative" data-enhanced-select>
 <label class="sr-only" for="user-status">Статус</label>
-<span class="pointer-events-none absolute inset-y-0 left-0 right-0 rounded-lg bg-gray-100 dark:bg-gray-800"></span>
-<select class="relative form-select w-full rounded-lg bg-transparent dark:bg-transparent border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] h-11 px-4" id="user-status" name="user_status" required>
+<select class="form-select w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white h-11 px-4" id="user-status" name="user_status" required>
 <option value="" disabled selected hidden>Статус</option>
 <option value="цивільний">Цивільний</option>
 <option value="військовослужбовець">Військовослужбовець</option>
 <option value="сзч">СЗЧ</option>
 </select>
 </div>
-<div class="relative">
+<div class="relative" data-enhanced-select>
 <label class="sr-only" for="user-rank">Звання</label>
-<span class="pointer-events-none absolute inset-y-0 left-0 right-0 rounded-lg bg-gray-100 dark:bg-gray-800"></span>
-<select class="relative form-select w-full rounded-lg bg-transparent dark:bg-transparent border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] h-11 px-4" id="user-rank" name="user_rank" required>
+<select class="form-select w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white h-11 px-4" id="user-rank" name="user_rank" required>
 <option value="" disabled selected hidden>Звання</option>
 <option value="відсутнє">Відсутнє</option>
 <option value="солдат">Солдат</option>
