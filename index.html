@@ -31,34 +31,42 @@
     }
   </script>
 <style>
-  /* Стилізація placeholder для select */
-  select option[disabled][selected] {
-    color: #9ca3af; /* gray-400 */
-  }
-  .dark select option[disabled][selected] {
-    color: #6b7280; /* gray-500 */
-  }
-  select:invalid {
-    color: #9ca3af; /* gray-400 */
-  }
-  .dark select:invalid {
-    color: #6b7280; /* gray-500 */
-  }
+    /* Стилізація placeholder для select */
+    select option[disabled][selected] {
+        color: #9ca3af; /* gray-400 */
+    }
+    .dark select option[disabled][selected] {
+        color: #6b7280; /* gray-500 */
+    }
+    select option {
+        color: #fcd34d; /* amber-300 */
+    }
+    .dark select option {
+        color: #fde68a; /* amber-200 */
+    }
+    select:invalid {
+        color: #9ca3af; /* gray-400 */
+    }
+    .dark select:invalid {
+        color: #6b7280; /* gray-500 */
+    }
 </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<body class="bg-background-light dark:bg-background-dark font-display text-yellow-500 dark:text-yellow-200">
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
-<header class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-lg">
+<header class="fixed top-0 left-0 right-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-lg">
 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex h-16 items-center justify-between">
+<div class="flex h-16 items-center justify-between gap-4">
 <!-- Left Navigation -->
 <nav class="hidden md:flex items-center gap-8">
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200" href="#about">Про нас</a>
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200" href="#gallery">Галерея</a>
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200" href="#faq">FAQ</a>
-<a class="text-lg font-medium hover:text-primary transition-colors duration-200" href="#apply">Подати заявку</a>
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200" href="#contacts">Контакти</a>
 </nav>
+
+<div class="flex items-center gap-3">
+<a class="hidden md:inline-flex text-lg font-semibold text-yellow-500 dark:text-yellow-200 hover:text-yellow-400 dark:hover:text-yellow-100 transition-colors duration-200" href="#apply">Подати заявку</a>
 
 <!-- Mobile Menu Button -->
 <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-primary">
@@ -66,6 +74,7 @@
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
 </svg>
 </button>
+</div>
 </div>
 
 <!-- Mobile Navigation -->
@@ -75,7 +84,7 @@
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200 py-2" href="#about">Про нас</a>
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200 py-2" href="#gallery">Галерея</a>
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200 py-2" href="#faq">FAQ</a>
-<a class="text-lg font-medium hover:text-primary transition-colors duration-200 py-2" href="#apply">Подати заявку</a>
+<a class="text-lg font-semibold text-yellow-500 dark:text-yellow-200 hover:text-yellow-400 dark:hover:text-yellow-100 transition-colors duration-200 py-2" href="#apply">Подати заявку</a>
 <a class="text-lg font-medium hover:text-primary transition-colors duration-200 py-2" href="#contacts">Контакти</a>
 </nav>
 </div>
@@ -83,7 +92,7 @@
 </div>
 </header>
 
-<main class="flex-grow">
+<main class="flex-grow pt-16 md:pt-20">
 <section id="hero">
 <div class="relative min-h-[84vh] md:min-h-[94vh] flex items-center justify-center text-center p-4 bg-cover bg-center" style='background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("photos/2025-10-09_16h08_22.png");'>
 <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-dark/50"></div>
@@ -94,8 +103,8 @@
 </div>
 </div>
 <div class="flex flex-col items-center md:items-center text-center md:text-left gap-4 mt-32 md:mt-36 flex-1">
-<h1 class="text-4xl md:text-6xl lg:text-5xl font-bold text-white leading-tight tracking-tight drop-shadow-lg max-w-3xl">58-ма окрема мотопіхотна бригада</h1>
-<h2 class="text-3xl md:text-5xl lg:text-5xl font-semibold text-white leading-tight tracking-tight drop-shadow-lg">імені Івана Виговського</h2>
+<h1 class="text-4xl md:text-6xl lg:text-5xl font-bold text-yellow-300 dark:text-yellow-200 leading-tight tracking-tight drop-shadow-lg max-w-3xl">58-ма окрема мотопіхотна бригада</h1>
+<h2 class="text-3xl md:text-5xl lg:text-5xl font-semibold text-yellow-200 dark:text-yellow-100 leading-tight tracking-tight drop-shadow-lg">імені Івана Виговського</h2>
 <a class="inline-flex items-center justify-center rounded-full h-14 px-10 bg-primary text-white text-lg font-bold shadow-2xl hover:bg-primary/90 hover:scale-105 transition-all duration-300 ease-in-out mt-4" href="#apply">
 <span>Подати заявку</span>
 </a>
@@ -107,13 +116,13 @@
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-16 sm:space-y-24">
 <section class="scroll-mt-24" id="about">
 <div class="text-center mb-12">
-<h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Про бригаду</h2>
+<h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Про бригаду</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center" style='background-image: url("photos/WhatsApp Image 2025-10-10 at 12.33.12.jpeg");'>
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
-<p class="text-lg leading-relaxed text-white/95 max-w-3xl mx-auto">
+<p class="text-lg leading-relaxed text-yellow-200 max-w-3xl mx-auto">
 58-ма окрема мотопіхотна бригада імені гетьмана Івана Виговського створена 16 лютого 2015 року для захисту України. 
 Виговці пройшли найгарячіші точки під час Антитерористичної операції/операції Об’єднаних сил на Донбасі та Луганщині: Авдіївка та Ясинуватський район, Трьохізбенка, Кримське, Жолобок, 29 блокпост, Новотошківка, Торецьк, Піски, Опитне; Старі Терни, Красногорівка, Старомихайлівка, Гірник; Покровськ, Мирноград, Гродівка, Бердичі, Ласточкине тощо
 </p>
@@ -123,7 +132,7 @@
 <div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center" style='background-image: url("photos/2025-10-09_16h09_10.png");'>
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
-<p class="text-lg leading-relaxed text-white/95 max-w-3xl mx-auto">
+<p class="text-lg leading-relaxed text-yellow-200 max-w-3xl mx-auto">
 6 травня 2019 року, на перше відзначення Дня піхоти, 58-ма бригада отримала почесну назву на честь гетьмана Івана Виговського (1657-1659), який завдав поразки московським військам у Конотопській битві.
 24 серпня 2024 року Президент України - Верховний Головнокомандувач Збройних Сил України Володимир Зеленський вручив командиру 58-ї окремої мотопіхотної бригади полковнику Руслану Шевчуку почесну відзнаку – Стрічку до Бойового Прапора військової частини "За мужність та відвагу"
 </p>
@@ -133,7 +142,7 @@
 <div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center" style='background-image: url("photos/2025-10-09_16h09_21.png");'>
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
-<p class="text-lg leading-relaxed text-white/95 max-w-3xl mx-auto">
+<p class="text-lg leading-relaxed text-yellow-200 max-w-3xl mx-auto">
 З 24 лютого 2022 року 58-ма окрема мотопіхотна бригада громила агресора на підступах від Чернігова до Бобровиці.
 З травня 2022 року бойовий шлях військової частини продовжився на Бахмутському напрямку. В грудні 2022 року бригада обороняла північні кордони  України на Чернігівщині.
 З середини лютого 2023 року 58-ма бригада виконувала бойові завдання в районі  Куп’янська, а з середини березня 2023 року - в районі Лиману Донецької області. З вересня 2023 року по жовтень 2024 року бригада  захищала південь Донбасу
@@ -144,7 +153,7 @@
 
 <section class="scroll-mt-24" id="gallery">
 <div class="text-center mb-12">
-<h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Наші переваги</h2>
+<h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Наші переваги</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -153,8 +162,8 @@
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Кращі командири</h3>
-<p class="text-gray-600 dark:text-gray-400">Досвідчені та професійні керівники, які забезпечують ефективне командування та підтримку</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Кращі командири</h3>
+<p class="text-yellow-200">Досвідчені та професійні керівники, які забезпечують ефективне командування та підтримку</p>
 </div>
 </div>
 
@@ -163,8 +172,8 @@
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Тривале якісне навчання</h3>
-<p class="text-gray-600 dark:text-gray-400">Комплексна підготовка та постійне вдосконалення навичок для забезпечення високої боєготовності</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Тривале якісне навчання</h3>
+<p class="text-yellow-200">Комплексна підготовка та постійне вдосконалення навичок для забезпечення високої боєготовності</p>
 </div>
 </div>
 
@@ -173,8 +182,8 @@
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Сучасна зброя та екіпіровка</h3>
-<p class="text-gray-600 dark:text-gray-400">Найновітнє озброєння та бронетехніка для ефективного виконання бойових завдань</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Сучасна зброя та екіпіровка</h3>
+<p class="text-yellow-200">Найновітнє озброєння та бронетехніка для ефективного виконання бойових завдань</p>
 </div>
 </div>
 
@@ -183,8 +192,8 @@
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Дружній колектив однодумців</h3>
-<p class="text-gray-600 dark:text-gray-400">Міцна команда професіоналів, об'єднаних спільною метою та взаємопідтримкою</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Дружній колектив однодумців</h3>
+<p class="text-yellow-200">Міцна команда професіоналів, об'єднаних спільною метою та взаємопідтримкою</p>
 </div>
 </div>
 
@@ -193,8 +202,8 @@
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Гідне грошове забезпечення</h3>
-<p class="text-gray-600 dark:text-gray-400">Конкурентна заробітна плата, премії та соціальний пакет для військовослужбовців</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Гідне грошове забезпечення</h3>
+<p class="text-yellow-200">Конкурентна заробітна плата, премії та соціальний пакет для військовослужбовців</p>
 </div>
 </div>
 
@@ -203,8 +212,8 @@
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Служба в компанії цікавих людей</h3>
-<p class="text-gray-600 dark:text-gray-400">Можливість мандрувати та професійно знищувати ворога в компанії однодумців</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Служба в компанії цікавих людей</h3>
+<p class="text-yellow-200">Можливість мандрувати та професійно знищувати ворога в компанії однодумців</p>
 </div>
 </div>
 </div>
@@ -226,12 +235,12 @@
                 <iframe class="w-full aspect-video rounded-2xl" src="https://www.youtube.com/embed/MRnhfXD_EYA" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
-        <button class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/70 text-white p-3 rounded-full hover:bg-black/90 transition-all duration-200 shadow-lg" id="prev-video">
+    <button class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/70 text-yellow-300 p-3 rounded-full hover:bg-black/90 transition-all duration-200 shadow-lg" id="prev-video">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
         </button>
-        <button class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/70 text-white p-3 rounded-full hover:bg-black/90 transition-all duration-200 shadow-lg" id="next-video">
+    <button class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/70 text-yellow-300 p-3 rounded-full hover:bg-black/90 transition-all duration-200 shadow-lg" id="next-video">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
@@ -242,14 +251,14 @@
 
 <section class="scroll-mt-24" id="vacancies">
 <div class="text-center mb-12">
-<h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Вакансії</h2>
+<h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Вакансії</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <section class="relative h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('photos/2025-10-09_16h11_39.png');">
 <div class="absolute inset-0 bg-black/50"></div>
-<div class="relative z-10 text-center text-white px-4">
-<p class="text-xl sm:text-2xl mb-4 max-w-2xl mx-auto"><strong>Ми гарантуємо</strong>, що ви приєднаєтесь до обраного вами підрозділу та отримаєте бажану посаду, на яку подали заявку.</p>
-<p class="text-xl sm:text-2xl mb-8 max-w-2xl mx-auto">Після вдалої співбесіди вам буде видано <strong>рекомендаційний лист</strong> — документ, що підтверджує готовність прийняти вас до того підрозділу, куди було надіслано вашу заявку</p>
+<div class="relative z-10 text-center text-yellow-200 px-4">
+<p class="text-xl sm:text-2xl mb-4 max-w-2xl mx-auto"><strong class="text-yellow-100">Ми гарантуємо</strong>, що ви приєднаєтесь до обраного вами підрозділу та отримаєте бажану посаду, на яку подали заявку.</p>
+<p class="text-xl sm:text-2xl mb-8 max-w-2xl mx-auto">Після вдалої співбесіди вам буде видано <strong class="text-yellow-100">рекомендаційний лист</strong> — документ, що підтверджує готовність прийняти вас до того підрозділу, куди було надіслано вашу заявку</p>
 <a href="https://58ompbr.lobbyx.army/" target="_blank" class="inline-block bg-primary text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary/90 transition-colors">Переглянути актуальні вакансії</a>
 </div>
 </section>
@@ -257,114 +266,114 @@
 
 <section class="scroll-mt-24" id="recruitment-steps">
 <div class="text-center mb-12">
-<h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Етапи рекрутингу</h2>
+<h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Етапи рекрутингу</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 text-center shadow-lg">
 <div class="text-6xl font-black text-primary mb-4">1</div>
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Вибір вакансії</h3>
-<p class="text-gray-600 dark:text-gray-400">Оберіть бажану позицію та надішліть свою заявку через форму нижче</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Вибір вакансії</h3>
+<p class="text-yellow-200">Оберіть бажану позицію та надішліть свою заявку через форму нижче</p>
 </div>
 <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 text-center shadow-lg">
 <div class="text-6xl font-black text-primary mb-4">2</div>
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Співбесіда</h3>
-<p class="text-gray-600 dark:text-gray-400">Пройдіть інтерв'ю з представником рекрутингового відділу для оцінки ваших навичок</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Співбесіда</h3>
+<p class="text-yellow-200">Пройдіть інтерв'ю з представником рекрутингового відділу для оцінки ваших навичок</p>
 </div>
 <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 text-center shadow-lg">
 <div class="text-6xl font-black text-primary mb-4">3</div>
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Отримання документів</h3>
-<p class="text-gray-600 dark:text-gray-400">Отримайте всі необхідні документи від рекрутингового відділу для подальшого оформлення</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Отримання документів</h3>
+<p class="text-yellow-200">Отримайте всі необхідні документи від рекрутингового відділу для подальшого оформлення</p>
 </div>
 <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 text-center shadow-lg">
 <div class="text-6xl font-black text-primary mb-4">4</div>
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Зарахування</h3>
-<p class="text-gray-600 dark:text-gray-400">Будьте зараховані до сил оборони на обрану спеціальність у відповідний підрозділ</p>
+<h3 class="text-xl font-bold text-yellow-200 mb-2">Зарахування</h3>
+<p class="text-yellow-200">Будьте зараховані до сил оборони на обрану спеціальність у відповідний підрозділ</p>
 </div>
 </div>
 </section>
 
 <section class="scroll-mt-24" id="faq">
 <div class="text-center mb-12">
-<h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Часті питання</h2>
+<h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Часті питання</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <div class="max-w-3xl mx-auto space-y-4">
 <!-- Питання 1 -->
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
 <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-<h3 class="text-lg font-bold text-gray-900 dark:text-white pr-8">Які вимоги до кандидатів?</h3>
+<h3 class="text-lg font-bold text-yellow-200 pr-8">Які вимоги до кандидатів?</h3>
 <svg class="faq-icon w-6 h-6 text-primary transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
 </svg>
 </button>
 <div class="faq-answer hidden px-6 pb-6">
-<p class="text-gray-600 dark:text-gray-400">Відповідь на питання 1. Тут буде детальна інформація про вимоги до кандидатів.</p>
+<p class="text-yellow-200">Відповідь на питання 1. Тут буде детальна інформація про вимоги до кандидатів.</p>
 </div>
 </div>
 
 <!-- Питання 2 -->
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
 <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-<h3 class="text-lg font-bold text-gray-900 dark:text-white pr-8">Скільки триває навчання?</h3>
+<h3 class="text-lg font-bold text-yellow-200 pr-8">Скільки триває навчання?</h3>
 <svg class="faq-icon w-6 h-6 text-primary transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
 </svg>
 </button>
 <div class="faq-answer hidden px-6 pb-6">
-<p class="text-gray-600 dark:text-gray-400">Відповідь на питання 2. Тут буде інформація про тривалість навчання.</p>
+<p class="text-yellow-200">Відповідь на питання 2. Тут буде інформація про тривалість навчання.</p>
 </div>
 </div>
 
 <!-- Питання 3 -->
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
 <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-<h3 class="text-lg font-bold text-gray-900 dark:text-white pr-8">Яке грошове забезпечення?</h3>
+<h3 class="text-lg font-bold text-yellow-200 pr-8">Яке грошове забезпечення?</h3>
 <svg class="faq-icon w-6 h-6 text-primary transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
 </svg>
 </button>
 <div class="faq-answer hidden px-6 pb-6">
-<p class="text-gray-600 dark:text-gray-400">Відповідь на питання 3. Тут буде інформація про грошове забезпечення.</p>
+<p class="text-yellow-200">Відповідь на питання 3. Тут буде інформація про грошове забезпечення.</p>
 </div>
 </div>
 
 <!-- Питання 4 -->
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
 <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-<h3 class="text-lg font-bold text-gray-900 dark:text-white pr-8">Які документи потрібні для вступу?</h3>
+<h3 class="text-lg font-bold text-yellow-200 pr-8">Які документи потрібні для вступу?</h3>
 <svg class="faq-icon w-6 h-6 text-primary transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
 </svg>
 </button>
 <div class="faq-answer hidden px-6 pb-6">
-<p class="text-gray-600 dark:text-gray-400">Відповідь на питання 4. Тут буде інформація про необхідні документи.</p>
+<p class="text-yellow-200">Відповідь на питання 4. Тут буде інформація про необхідні документи.</p>
 </div>
 </div>
 
 <!-- Питання 5 -->
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
 <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-<h3 class="text-lg font-bold text-gray-900 dark:text-white pr-8">Чи можна вибрати спеціальність?</h3>
+<h3 class="text-lg font-bold text-yellow-200 pr-8">Чи можна вибрати спеціальність?</h3>
 <svg class="faq-icon w-6 h-6 text-primary transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
 </svg>
 </button>
 <div class="faq-answer hidden px-6 pb-6">
-<p class="text-gray-600 dark:text-gray-400">Відповідь на питання 5. Тут буде інформація про вибір спеціальності.</p>
+<p class="text-yellow-200">Відповідь на питання 5. Тут буде інформація про вибір спеціальності.</p>
 </div>
 </div>
 
 <!-- Питання 6 -->
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
 <button class="faq-question w-full text-left p-6 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-<h3 class="text-lg font-bold text-gray-900 dark:text-white pr-8">Як проходить процес відбору?</h3>
+<h3 class="text-lg font-bold text-yellow-200 pr-8">Як проходить процес відбору?</h3>
 <svg class="faq-icon w-6 h-6 text-primary transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
 </svg>
 </button>
 <div class="faq-answer hidden px-6 pb-6">
-<p class="text-gray-600 dark:text-gray-400">Відповідь на питання 6. Тут буде інформація про процес відбору.</p>
+<p class="text-yellow-200">Відповідь на питання 6. Тут буде інформація про процес відбору.</p>
 </div>
 </div>
 </div>
@@ -373,35 +382,37 @@
 <section class="scroll-mt-24" id="apply">
 <div class="max-w-2xl mx-auto">
 <div class="text-center mb-10">
-<h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Подати заявку</h2>
+<h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Подати заявку</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-6 md:p-10 border border-gray-200 dark:border-gray-700">
 <form class="space-y-5" id="applicationForm">
 <div>
 <label class="sr-only" for="user-name">Повне ім'я</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-name" name="user_name" placeholder="ПІБ" required type="text"/>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-name" name="user_name" placeholder="ПІБ" required type="text"/>
 </div>
 <div>
 <label class="sr-only" for="user-phone">Номер телефону</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-phone" name="user_phone" placeholder="+380 XX XXX XX XX" required type="tel"/>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-phone" name="user_phone" placeholder="+380 XX XXX XX XX" required type="tel"/>
 </div>
 <div>
 <label class="sr-only" for="user-age">Вік</label>
-<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-age" min="18" max="65" name="user_age" placeholder="Вік" required type="number"/>
+<input class="form-input w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] placeholder:text-gray-400 dark:placeholder:text-gray-500 h-11 px-4" id="user-age" min="18" max="65" name="user_age" placeholder="Вік" required type="number"/>
 </div>
-<div>
+<div class="relative">
 <label class="sr-only" for="user-status">Статус</label>
-<select class="form-select w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white h-11 px-4" id="user-status" name="user_status" required>
+<span class="pointer-events-none absolute inset-y-0 left-0 right-0 rounded-lg bg-gray-100 dark:bg-gray-800"></span>
+<select class="relative form-select w-full rounded-lg bg-transparent dark:bg-transparent border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] h-11 px-4" id="user-status" name="user_status" required>
 <option value="" disabled selected hidden>Статус</option>
 <option value="цивільний">Цивільний</option>
 <option value="військовослужбовець">Військовослужбовець</option>
 <option value="сзч">СЗЧ</option>
 </select>
 </div>
-<div>
+<div class="relative">
 <label class="sr-only" for="user-rank">Звання</label>
-<select class="form-select w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white h-11 px-4" id="user-rank" name="user_rank" required>
+<span class="pointer-events-none absolute inset-y-0 left-0 right-0 rounded-lg bg-gray-100 dark:bg-gray-800"></span>
+<select class="relative form-select w-full rounded-lg bg-transparent dark:bg-transparent border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] h-11 px-4" id="user-rank" name="user_rank" required>
 <option value="" disabled selected hidden>Звання</option>
 <option value="відсутнє">Відсутнє</option>
 <option value="солдат">Солдат</option>
@@ -411,7 +422,7 @@
 </div>
 <div>
 <label class="sr-only" for="user-comment">Додаткова інформація</label>
-<textarea class="form-textarea w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 p-3" id="user-comment" name="user_comment" placeholder="Додаткова інформація (досвід, навички, вакансія тощо)" rows="3"></textarea>
+<textarea class="form-textarea w-full rounded-lg bg-gray-100 dark:bg-gray-800 border-transparent focus:border-primary focus:ring-primary text-[#fcd34d] dark:text-[#fde68a] placeholder:text-gray-400 dark:placeholder:text-gray-500 p-3" id="user-comment" name="user_comment" placeholder="Додаткова інформація (досвід, навички, вакансія тощо)" rows="3"></textarea>
 </div>
 <button class="inline-flex min-w-[160px] items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary text-white text-base font-bold shadow-xl hover:bg-primary/90 hover:scale-105 transition-all duration-300" type="submit">
 <span class="truncate">Відправити заявку</span>
@@ -461,7 +472,7 @@
 <section class="scroll-mt-24" id="contacts">
 <div class="max-w-6xl mx-auto">
 <div class="text-center mb-12">
-<h2 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">Контакти</h2>
+<h2 class="text-4xl font-black tracking-tight text-yellow-300 dark:text-yellow-100 sm:text-5xl mb-4">Контакти</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
 <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-3xl shadow-2xl p-8 md:p-16 border border-gray-200 dark:border-gray-700">
@@ -487,8 +498,8 @@
 </svg>
 </div>
 <div class="flex-1 min-w-0 overflow-hidden">
-<h4 class="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1">Телефон</h4>
-<a class="block text-gray-900 dark:text-white hover:text-primary transition-colors font-medium text-base whitespace-nowrap" href="tel:+380632662752">+380 632 662 752</a>
+<h4 class="text-sm font-semibold text-yellow-200 mb-1">Телефон</h4>
+<a class="block text-yellow-200 hover:text-primary transition-colors font-medium text-base whitespace-nowrap" href="tel:+380632662752">+380 632 662 752</a>
 </div>
 </div>
 </div>
@@ -502,8 +513,8 @@
 </svg>
 </div>
 <div class="flex-1 min-w-0 overflow-hidden">
-<h4 class="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1">Email</h4>
-<a class="block text-gray-900 dark:text-white hover:text-primary transition-colors font-medium text-base whitespace-nowrap" href="mailto:58ompbr.i.v@gmail.com">58ompbr.i.v@gmail.com</a>
+<h4 class="text-sm font-semibold text-yellow-200 mb-1">Email</h4>
+<a class="block text-yellow-200 hover:text-primary transition-colors font-medium text-base whitespace-nowrap" href="mailto:58ompbr.i.v@gmail.com">58ompbr.i.v@gmail.com</a>
 </div>
 </div>
 </div>
@@ -511,7 +522,7 @@
 
 <!-- Соціальні мережі -->
 <div class="bg-white dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">Соціальні мережі</h3>
+<h3 class="text-xl font-bold text-yellow-200 mb-6 text-center">Соціальні мережі</h3>
 <div class="flex justify-center items-center gap-8">
 <!-- Facebook -->
 <a href="https://www.facebook.com/58brigade" target="_blank" class="group flex flex-col items-center">
@@ -520,7 +531,7 @@
 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
 </svg>
 </div>
-<span class="text-sm font-medium text-gray-600 dark:text-gray-400 mt-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Facebook</span>
+<span class="text-sm font-medium text-yellow-200 mt-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Facebook</span>
 </a>
 
 <!-- Instagram -->
@@ -530,7 +541,7 @@
 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
 </svg>
 </div>
-<span class="text-sm font-medium text-gray-600 dark:text-gray-400 mt-3 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">Instagram</span>
+<span class="text-sm font-medium text-yellow-200 mt-3 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">Instagram</span>
 </a>
 
 <!-- YouTube -->
@@ -540,7 +551,7 @@
 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
 </svg>
 </div>
-<span class="text-sm font-medium text-gray-600 dark:text-gray-400 mt-3 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">YouTube</span>
+<span class="text-sm font-medium text-yellow-200 mt-3 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">YouTube</span>
 </a>
 </div>
 </div>
