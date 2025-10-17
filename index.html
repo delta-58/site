@@ -50,7 +50,46 @@
     .dark select:invalid {
         color: #6b7280; /* gray-500 */
     }
+
+    :root {
+        --header-offset: 112px;
+    }
+
+    html, body {
+        scroll-padding-top: var(--header-offset);
+    }
+
+    .section-anchor {
+        scroll-margin-top: var(--header-offset);
+    }
 </style>
+<script>
+    (function() {
+        function initDynamicHeaderOffset() {
+            const header = document.querySelector('header');
+
+            function updateHeaderOffset() {
+                const headerHeight = header ? header.getBoundingClientRect().height : 80;
+                const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+                const extraSpace = isDesktop ? 32 : 24;
+                const offset = Math.round(headerHeight + extraSpace);
+                document.documentElement.style.setProperty('--header-offset', offset + 'px');
+            }
+
+            updateHeaderOffset();
+
+            if ('ResizeObserver' in window && header) {
+                const resizeObserver = new ResizeObserver(() => updateHeaderOffset());
+                resizeObserver.observe(header);
+            }
+
+            window.addEventListener('resize', updateHeaderOffset);
+            window.addEventListener('orientationchange', updateHeaderOffset);
+        }
+
+        document.addEventListener('DOMContentLoaded', initDynamicHeaderOffset);
+    })();
+</script>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-yellow-500 dark:text-yellow-200">
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
@@ -276,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-16 sm:space-y-24">
-<section class="scroll-mt-24" id="about">
+<section class="section-anchor" id="about">
 <div class="text-center mb-12">
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Про бригаду</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
@@ -313,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </section>
 
-<section class="scroll-mt-24" id="gallery">
+<section class="section-anchor" id="gallery">
 <div class="text-center mb-12">
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Наші переваги</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
@@ -411,7 +450,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </section>
 
-<section class="scroll-mt-24" id="vacancies">
+<section class="section-anchor" id="vacancies">
 <div class="text-center mb-12">
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Вакансії</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
@@ -426,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 </section>
 
-<section class="scroll-mt-24" id="recruitment-steps">
+<section class="section-anchor" id="recruitment-steps">
 <div class="text-center mb-12">
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Етапи рекрутингу</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
@@ -460,7 +499,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </section>
 
-<section class="scroll-mt-24" id="faq">
+<section class="section-anchor" id="faq">
 <div class="text-center mb-12">
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Часті питання</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
@@ -561,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </section>
 
-<section class="scroll-mt-24" id="apply">
+<section class="section-anchor" id="apply">
 <div class="max-w-2xl mx-auto">
 <div class="text-center mb-10">
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Подати заявку</h2>
@@ -649,7 +688,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </section>
 
-<section class="scroll-mt-24" id="contacts">
+<section class="section-anchor pt-16 md:pt-24" id="contacts">
 <div class="max-w-6xl mx-auto">
 <div class="text-center mb-12">
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Контакти</h2>
@@ -912,25 +951,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
             
-            if (targetElement) {
-                // Отримуємо висоту хедера
+            if (targetId === 'contacts') {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            } else if (targetElement) {
                 const header = document.querySelector('header');
-                const headerHeight = header ? header.offsetHeight : 80;
-                
-                // Віднімаємо 20px від висоти хедера для оптимального положення назви секції
-                const offset = headerHeight - 20;
-                
-                // Розраховуємо позицію з відступом
+                const headerHeight = header ? header.getBoundingClientRect().height : 80;
+                const cssOffset = getComputedStyle(document.documentElement).getPropertyValue('--header-offset');
+                const parsedOffset = parseFloat(cssOffset) || headerHeight + 32;
+                const offset = parsedOffset;
+
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - offset;
-                
-                // Плавна прокрутка
+
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
-                
-                // Закриваємо мобільне меню після кліку
+
                 const mobileMenu = document.getElementById('mobile-menu');
                 if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
