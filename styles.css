@@ -1,0 +1,100 @@
+/* Placeholder styling for select controls */
+select option[disabled][selected] {
+    color: #9ca3af;
+}
+.dark select option[disabled][selected] {
+    color: #6b7280;
+}
+select option:not([disabled]) {
+    color: #fcd34d;
+}
+.dark select option:not([disabled]) {
+    color: #fde68a;
+}
+select:invalid {
+    color: #9ca3af;
+}
+.dark select:invalid {
+    color: #6b7280;
+}
+
+:root {
+    --header-offset: 112px;
+}
+
+html,
+body {
+    scroll-padding-top: var(--header-offset);
+}
+
+.section-anchor {
+    scroll-margin-top: var(--header-offset);
+}
+
+body {
+    background-image: linear-gradient(rgba(248, 246, 246, 0.3), rgba(248, 246, 246, 0.3)), url('photos/2025-10-09_16h08_22.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.dark body {
+    background-image: linear-gradient(rgba(33, 17, 17, 0), rgba(33, 17, 17, 0)), url('photos/2025-10-09_16h08_22.png') !important;
+}
+
+.hero-banner,
+.about-banner,
+.advantage-image,
+.vacancies-highlight {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.hero-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("photos/2025-10-09_16h08_22.png");
+}
+
+.about-banner-primary {
+    background-image: url("photos/WhatsApp Image 2025-10-10 at 12.33.12.jpeg");
+}
+
+.about-banner-secondary {
+    background-image: url("photos/2025-10-09_16h09_10.png");
+}
+
+.about-banner-tertiary {
+    background-image: url("photos/2025-10-09_16h09_21.png");
+}
+
+.advantage-image-one {
+    background-image: url("photos/2025-10-09_16h11_12.png");
+}
+
+.advantage-image-two {
+    background-image: url("photos/2025-10-09_16h09_33.png");
+}
+
+.advantage-image-three {
+    background-image: url("photos/2025-10-09_16h10_26.png");
+}
+
+.advantage-image-four {
+    background-image: url("photos/2025-10-09_16h10_33.png");
+}
+
+.advantage-image-five {
+    background-image: url("photos/2025-10-09_16h10_41.png");
+}
+
+.advantage-image-six {
+    background-image: url("photos/2025-10-09_16h10_52.png");
+}
+
+.vacancies-highlight {
+    background-image: url('photos/2025-10-09_16h11_39.png');
+}
+
+#video-carousel {
+    width: 133.333%;
+}

@@ -31,44 +31,7 @@
       },
     }
   </script>
-<style>
-    /* Стилізація placeholder для select */
-    select option[disabled][selected] {
-        color: #9ca3af; /* gray-400 */
-    }
-    .dark select option[disabled][selected] {
-        color: #6b7280; /* gray-500 */
-    }
-    select option:not([disabled]) {
-        color: #fcd34d; /* amber-300 */
-    }
-    .dark select option:not([disabled]) {
-        color: #fde68a; /* amber-200 */
-    }
-    select:invalid {
-        color: #9ca3af; /* gray-400 */
-    }
-    .dark select:invalid {
-        color: #6b7280; /* gray-500 */
-    }
-
-    :root {
-        --header-offset: 112px;
-    }
-
-    html, body {
-        scroll-padding-top: var(--header-offset);
-    }
-
-    .section-anchor {
-        scroll-margin-top: var(--header-offset);
-    }
-
-    /* Background opacity for dark mode */
-    .dark body {
-        background-image: linear-gradient(rgba(33, 17, 17, 0), rgba(33, 17, 17, 0)), url('photos/2025-10-09_16h08_22.png') !important;
-    }
-</style>
+<link rel="stylesheet" href="styles.css"/>
 <script>
     (function() {
         function initDynamicHeaderOffset() {
@@ -98,7 +61,7 @@
 </script>
     <link rel="icon" type="image/png" href="photos/favicon.png"/>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-yellow-500 dark:text-yellow-200" style="background-image: linear-gradient(rgba(248, 246, 246, 0.3), rgba(248, 246, 246, 0.3)), url('photos/2025-10-09_16h08_22.png'); background-size: cover; background-position: center; background-attachment: fixed;">
+<body class="bg-background-light dark:bg-background-dark font-display text-yellow-500 dark:text-yellow-200">
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
 <header class="fixed top-0 left-0 right-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-lg">
 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -304,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <main class="flex-grow">
 <section id="hero">
-<div class="relative min-h-screen flex items-center justify-center text-center px-4 bg-cover bg-center" style='background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("photos/2025-10-09_16h08_22.png");'>
+<div class="relative min-h-screen flex items-center justify-center text-center px-4 bg-cover bg-center hero-banner">
 <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-dark/50"></div>
 <div class="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-center gap-0.5 md:gap-1 pt-10 md:pt-12 pb-0">
 <div class="flex-shrink-0 mt-6 md:mt-10 -ml-12">
@@ -329,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Про бригаду</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
-<div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center" style='background-image: url("photos/WhatsApp Image 2025-10-10 at 12.33.12.jpeg");'>
+<div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center about-banner about-banner-primary">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
 <p class="text-lg leading-relaxed text-yellow-200 max-w-3xl mx-auto">
@@ -339,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 
-<div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center" style='background-image: url("photos/2025-10-09_16h09_10.png");'>
+<div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center about-banner about-banner-secondary">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
 <p class="text-lg leading-relaxed text-yellow-200 max-w-3xl mx-auto">
@@ -349,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 
-<div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center" style='background-image: url("photos/2025-10-09_16h09_21.png");'>
+<div class="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center about-banner about-banner-tertiary">
 <div class="absolute inset-0 bg-black/60"></div>
 <div class="relative z-10 max-w-4xl mx-auto text-center px-4">
 <p class="text-lg leading-relaxed text-yellow-200 max-w-3xl mx-auto">
@@ -368,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 <div class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden" style='background-image: url("photos/2025-10-09_16h11_12.png");'>
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden advantage-image advantage-image-one">
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
@@ -378,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden" style='background-image: url("photos/2025-10-09_16h09_33.png");'>
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden advantage-image advantage-image-two">
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
@@ -388,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden" style='background-image: url("photos/2025-10-09_16h10_26.png");'>
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden advantage-image advantage-image-three">
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
@@ -398,7 +361,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden" style='background-image: url("photos/2025-10-09_16h10_33.png");'>
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden advantage-image advantage-image-four">
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
@@ -408,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden" style='background-image: url("photos/2025-10-09_16h10_41.png");'>
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden advantage-image advantage-image-five">
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
@@ -418,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <div class="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden" style='background-image: url("photos/2025-10-09_16h10_52.png");'>
+<div class="w-full bg-center bg-no-repeat aspect-video bg-cover overflow-hidden advantage-image advantage-image-six">
 <div class="w-full h-full bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 </div>
 <div class="p-6">
@@ -431,7 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Відео карусель -->
 <div class="mt-4">
     <div class="relative overflow-hidden rounded-2xl">
-        <div class="flex transition-transform duration-300 ease-in-out" id="video-carousel" style="width: 133.333%;">
+    <div class="flex transition-transform duration-300 ease-in-out" id="video-carousel">
             <div class="w-full md:w-1/3 px-2">
                 <iframe class="w-full aspect-video rounded-2xl" src="https://www.youtube.com/embed/8jDBSx5xwrU" frameborder="0" allowfullscreen></iframe>
             </div>
@@ -464,7 +427,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <h2 class="text-4xl font-black tracking-tight text-[#f6a500] dark:text-[#facc15] sm:text-5xl mb-4">Вакансії</h2>
 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
 </div>
-<section class="relative h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('photos/2025-10-09_16h11_39.png');">
+<section class="relative h-screen flex items-center justify-center bg-cover bg-center vacancies-highlight">
 <div class="absolute inset-0 bg-black/50"></div>
 <div class="relative z-10 text-center text-yellow-200 px-4">
 <p class="text-xl sm:text-2xl mb-4 max-w-2xl mx-auto"><strong class="text-yellow-100">Ми гарантуємо</strong>, що ви приєднаєтесь до обраного вами підрозділу та отримаєте бажану посаду, на яку подали заявку.</p>
