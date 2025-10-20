@@ -1,12 +1,16 @@
 // ==================== КОНФІГУРАЦІЯ ====================
 
+// Змінні оточення з .env (через Vite)
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
 // Ініціалізація EmailJS
 (function initEmailJS() {
-    // Використовуємо змінні середовища, якщо вони доступні
-    // Замініть 'YOUR_PUBLIC_KEY' на ваш реальний ключ EmailJS
-    const publicKey = window.EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
-    if (publicKey && publicKey !== 'YOUR_PUBLIC_KEY' && typeof emailjs !== 'undefined') {
-        emailjs.init(publicKey);
+    if (EMAILJS_PUBLIC_KEY && typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+    } else {
+        console.error('EmailJS Public Key не знайдено. Перевірте .env файл');
     }
 })();
 
@@ -414,13 +418,9 @@ function initApplicationForm() {
 
         console.log('Відправляємо дані:', templateParams);
 
-        // Отримуємо змінні середовища
-        // Замініть на ваші реальні значення або використовуйте window.EMAILJS_SERVICE_ID і window.EMAILJS_TEMPLATE_ID
-        const serviceId = window.EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
-        const templateId = window.EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
-
-        if (!serviceId || serviceId === 'YOUR_SERVICE_ID' || !templateId || templateId === 'YOUR_TEMPLATE_ID') {
-            console.error('Відсутні налаштування EmailJS. Будь ласка, налаштуйте змінні в script.js');
+        // Перевірка наявності конфігурації EmailJS
+        if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) {
+            console.error('Відсутні налаштування EmailJS. Перевірте .env файл');
             showErrorModal();
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
@@ -428,7 +428,7 @@ function initApplicationForm() {
         }
 
         // Відправляємо через EmailJS
-        emailjs.send(serviceId, templateId, templateParams)
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
             .then(function(response) {
                 console.log('SUCCESS!', response.status, response.text);
                 showSuccessModal();

@@ -3,6 +3,12 @@
 .env.local
 .env.production
 
+# Dependencies (NPM пакети - не треба в git!)
+node_modules/
+
+# Build output (результат збірки - генерується автоматично)
+dist/
+
 # Системні файли macOS
 .DS_Store
 .AppleDouble
