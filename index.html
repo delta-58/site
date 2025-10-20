@@ -800,7 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 // Ініціалізація EmailJS
 (function(){
-    emailjs.init("adTi5M6ATwOFELBCc"); // PUBLIC_KEY з .env
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY); // PUBLIC_KEY з .env
 })();
 
 // Обробка форми з EmailJS
@@ -838,8 +838,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Відправляємо через EmailJS
         emailjs.send(
-            'service_d4l1l1r',  // SERVICE_ID з .env
-            'template_649iuvp', // TEMPLATE_ID з .env
+            import.meta.env.VITE_EMAILJS_SERVICE_ID,  // SERVICE_ID з .env
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID, // TEMPLATE_ID з .env
             templateParams
         )
         .then(function(response) {
