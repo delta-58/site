@@ -63,6 +63,11 @@
     .section-anchor {
         scroll-margin-top: var(--header-offset);
     }
+
+    /* Background opacity for dark mode */
+    .dark body {
+        background-image: linear-gradient(rgba(33, 17, 17, 0), rgba(33, 17, 17, 0)), url('photos/2025-10-09_16h08_22.png') !important;
+    }
 </style>
 <script>
     (function() {
@@ -91,8 +96,9 @@
         document.addEventListener('DOMContentLoaded', initDynamicHeaderOffset);
     })();
 </script>
+    <link rel="icon" type="image/png" href="photos/favicon.png"/>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-yellow-500 dark:text-yellow-200">
+<body class="bg-background-light dark:bg-background-dark font-display text-yellow-500 dark:text-yellow-200" style="background-image: linear-gradient(rgba(248, 246, 246, 0.3), rgba(248, 246, 246, 0.3)), url('photos/2025-10-09_16h08_22.png'); background-size: cover; background-position: center; background-attachment: fixed;">
 <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
 <header class="fixed top-0 left-0 right-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-lg">
 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
