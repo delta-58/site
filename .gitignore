@@ -1,0 +1,26 @@
+# Файли середовища (секретні ключі зберігаються тут)
+.env
+.env.local
+.env.production
+
+# Системні файли macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Файли з редакторів
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Логи
+*.log
+
+# Тимчасові файли
+*.tmp
+*.bak

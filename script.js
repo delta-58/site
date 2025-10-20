@@ -1,550 +1,615 @@
-window.tailwind = window.tailwind || {};
-window.tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        primary: "#ea2a33",
-        "background-light": "#f8f6f6",
-        "background-dark": "#211111",
-      },
-      fontFamily: {
-        display: ["Work Sans"],
-      },
-      borderRadius: {
-        DEFAULT: "0.25rem",
-        lg: "0.5rem",
-        xl: "0.75rem",
-        full: "9999px",
-      },
-    },
-  },
-};
+// ==================== КОНФІГУРАЦІЯ ====================
 
-(function initDynamicHeaderOffset() {
-  function updateHeaderOffset() {
-    const header = document.querySelector("header");
-    const headerHeight = header ? header.getBoundingClientRect().height : 80;
-    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-    const extraSpace = isDesktop ? 32 : 24;
-    const offset = Math.round(headerHeight + extraSpace);
-    document.documentElement.style.setProperty("--header-offset", `${offset}px`);
-  }
-
-  function setupObserver() {
-    const header = document.querySelector("header");
-    if ("ResizeObserver" in window && header) {
-      const resizeObserver = new ResizeObserver(updateHeaderOffset);
-      resizeObserver.observe(header);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    updateHeaderOffset();
-    setupObserver();
-    window.addEventListener("resize", updateHeaderOffset);
-    window.addEventListener("orientationchange", updateHeaderOffset);
-  });
-})();
-
-document.addEventListener("DOMContentLoaded", () => {
-  const lightOptionColor = "#fcd34d";
-  const darkOptionColor = "#fde68a";
-  const placeholderLight = "#9ca3af";
-  const placeholderDark = "#6b7280";
-
-  const enhancedSelects = document.querySelectorAll("[data-enhanced-select]");
-
-  const closeAllSelects = (except = null) => {
-    enhancedSelects.forEach((container) => {
-      if (container === except) return;
-      const trigger = container.querySelector("[data-select-trigger]");
-      const list = container.querySelector("[data-select-options]");
-      if (!trigger || !list) return;
-      trigger.setAttribute("aria-expanded", "false");
-      list.classList.add("hidden");
-      const icon = trigger.querySelector("svg");
-      if (icon) {
-        icon.classList.remove("rotate-180");
-      }
-    });
-  };
-
-  enhancedSelects.forEach((container) => {
-    const select = container.querySelector("select");
-    if (!select || container.dataset.enhanced === "true") return;
-    container.dataset.enhanced = "true";
-
-    const isDarkMode = () => document.documentElement.classList.contains("dark");
-
-    const trigger = document.createElement("button");
-    trigger.type = "button";
-    trigger.className =
-      "flex w-full h-11 items-center justify-between rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent px-4 text-left focus:outline-none focus:ring-2 focus:ring-primary";
-    trigger.setAttribute("data-select-trigger", "");
-    trigger.setAttribute("aria-haspopup", "listbox");
-    trigger.setAttribute("aria-expanded", "false");
-
-    const valueSpan = document.createElement("span");
-    valueSpan.setAttribute("data-select-value", "");
-    valueSpan.className = "block truncate text-gray-400 dark:text-gray-500";
-    trigger.appendChild(valueSpan);
-
-    const caret = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    caret.setAttribute("viewBox", "0 0 24 24");
-    caret.setAttribute("fill", "none");
-    caret.setAttribute("stroke", "currentColor");
-    caret.setAttribute("stroke-width", "2");
-    caret.classList.add(
-      "ml-2",
-      "h-5",
-      "w-5",
-      "flex-shrink-0",
-      "text-[#fcd34d]",
-      "dark:text-[#fde68a]",
-      "transition-transform",
-      "duration-200"
-    );
-    const caretPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    caretPath.setAttribute("stroke-linecap", "round");
-    caretPath.setAttribute("stroke-linejoin", "round");
-    caretPath.setAttribute("d", "M6 9l6 6 6-6");
-    caret.appendChild(caretPath);
-    trigger.appendChild(caret);
-
-    const list = document.createElement("ul");
-    list.className =
-      "absolute left-0 right-0 top-full z-20 mt-2 max-h-56 overflow-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 shadow-2xl hidden";
-    list.setAttribute("data-select-options", "");
-    list.setAttribute("role", "listbox");
-
-    const options = Array.from(select.options);
-    options.forEach((option) => {
-      if (option.disabled && option.hidden) return;
-      const item = document.createElement("li");
-      item.setAttribute("role", "option");
-      item.setAttribute("data-option-value", option.value);
-      item.className =
-        "px-4 py-2 cursor-pointer text-[#fcd34d] dark:text-[#fde68a] hover:bg-primary/10 focus:bg-primary/10 focus:outline-none transition-colors duration-150";
-      item.textContent = option.textContent;
-
-      item.addEventListener("click", () => {
-        select.value = option.value;
-        select.dispatchEvent(new Event("change", { bubbles: true }));
-        updateDisplay();
-        closeAllSelects();
-      });
-
-      item.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          item.click();
-        }
-      });
-
-      list.appendChild(item);
-    });
-
-    container.appendChild(trigger);
-    container.appendChild(list);
-
-    const updateDisplay = () => {
-      const currentOption = select.options[select.selectedIndex];
-      const isPlaceholder =
-        !currentOption || currentOption.disabled || currentOption.value === "";
-      const optionColor = isDarkMode() ? darkOptionColor : lightOptionColor;
-      const placeholderColor = isDarkMode() ? placeholderDark : placeholderLight;
-
-      valueSpan.textContent = currentOption ? currentOption.textContent : "";
-      valueSpan.className = isPlaceholder
-        ? "block truncate text-gray-400 dark:text-gray-500"
-        : "block truncate font-medium text-[#fcd34d] dark:text-[#fde68a]";
-
-      Array.from(list.children).forEach((item) => {
-        if (item.getAttribute("data-option-value") === select.value) {
-          item.classList.add("bg-primary/10");
-        } else {
-          item.classList.remove("bg-primary/10");
-        }
-      });
-
-      select.style.color = isPlaceholder ? placeholderColor : optionColor;
-    };
-
-    trigger.addEventListener("click", (event) => {
-      event.preventDefault();
-      const isOpen = trigger.getAttribute("aria-expanded") === "true";
-      if (isOpen) {
-        trigger.setAttribute("aria-expanded", "false");
-        list.classList.add("hidden");
-        caret.classList.remove("rotate-180");
-      } else {
-        closeAllSelects(container);
-        trigger.setAttribute("aria-expanded", "true");
-        list.classList.remove("hidden");
-        caret.classList.add("rotate-180");
-      }
-    });
-
-    select.addEventListener("change", updateDisplay);
-
-    updateDisplay();
-    select.classList.add("hidden");
-
-    const themeObserver = new MutationObserver(updateDisplay);
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  });
-
-  document.addEventListener("click", (event) => {
-    const targetContainer = event.target.closest("[data-enhanced-select]");
-    closeAllSelects(targetContainer || null);
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeAllSelects();
-    }
-  });
-});
-
+// Ініціалізація EmailJS
 (function initEmailJS() {
-  if (typeof emailjs === "undefined" || typeof emailjs.init !== "function") {
-    console.warn("EmailJS SDK is not available.");
-    return;
-  }
-
-  try {
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
-  } catch (error) {
-    console.error("Failed to initialize EmailJS", error);
-  }
+    // Використовуємо змінні середовища, якщо вони доступні
+    // Замініть 'YOUR_PUBLIC_KEY' на ваш реальний ключ EmailJS
+    const publicKey = window.EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
+    if (publicKey && publicKey !== 'YOUR_PUBLIC_KEY' && typeof emailjs !== 'undefined') {
+        emailjs.init(publicKey);
+    }
 })();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("applicationForm");
-  if (!form) return;
+// ==================== УТИЛІТИ ====================
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const successModal = document.getElementById("successModal");
-    const errorModal = document.getElementById("errorModal");
-    const submitButton = form.querySelector('button[type="submit"]');
-    if (!submitButton) return;
-
-    successModal?.classList.add("hidden");
-    errorModal?.classList.add("hidden");
-
-    const originalButtonText = submitButton.innerHTML;
-    submitButton.disabled = true;
-    submitButton.innerHTML = '<span class="truncate">Відправляється...</span>';
-
-    const formDataRaw = new FormData(form);
-    const templateParams = {
-      user_name: formDataRaw.get("user_name"),
-      user_phone: formDataRaw.get("user_phone"),
-      user_age: formDataRaw.get("user_age"),
-      user_status: formDataRaw.get("user_status"),
-      user_rank: formDataRaw.get("user_rank"),
-      user_comment: formDataRaw.get("user_comment"),
-    };
-
-    console.log("Відправляємо дані:", templateParams);
-
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams
-      )
-      .then((response) => {
-        console.log("SUCCESS!", response.status, response.text);
-        window.showSuccessModal();
-        form.reset();
-      })
-      .catch((error) => {
-        console.error("FAILED...", error);
-        window.showErrorModal();
-      })
-      .finally(() => {
-        submitButton.disabled = false;
-        submitButton.innerHTML = originalButtonText;
-      });
-  });
-});
-
-window.showSuccessModal = function showSuccessModal() {
-  const modal = document.getElementById("successModal");
-  const content = document.getElementById("successModalContent");
-  if (!modal || !content) return;
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-  setTimeout(() => {
-    content.classList.remove("scale-95");
-    content.classList.add("scale-100");
-  }, 10);
-};
-
-window.closeSuccessModal = function closeSuccessModal() {
-  const modal = document.getElementById("successModal");
-  const content = document.getElementById("successModalContent");
-  if (!modal || !content) return;
-  content.classList.remove("scale-100");
-  content.classList.add("scale-95");
-  setTimeout(() => {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }, 200);
-};
-
-window.showErrorModal = function showErrorModal() {
-  const modal = document.getElementById("errorModal");
-  const content = document.getElementById("errorModalContent");
-  if (!modal || !content) return;
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-  setTimeout(() => {
-    content.classList.remove("scale-95");
-    content.classList.add("scale-100");
-  }, 10);
-};
-
-window.closeErrorModal = function closeErrorModal() {
-  const modal = document.getElementById("errorModal");
-  const content = document.getElementById("errorModalContent");
-  if (!modal || !content) return;
-  content.classList.remove("scale-100");
-  content.classList.add("scale-95");
-  setTimeout(() => {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }, 200);
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-  const successModal = document.getElementById("successModal");
-  const errorModal = document.getElementById("errorModal");
-
-  successModal?.addEventListener("click", (event) => {
-    if (event.target === successModal) {
-      window.closeSuccessModal();
+/**
+ * Отримує висоту заголовка з урахуванням CSS змінної
+ */
+function getHeaderOffset() {
+    const cssOffset = getComputedStyle(document.documentElement)
+        .getPropertyValue('--header-offset');
+    const parsedOffset = parseFloat(cssOffset);
+    
+    if (!isNaN(parsedOffset)) {
+        return parsedOffset;
     }
-  });
+    
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.getBoundingClientRect().height : 80;
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    const extraSpace = isDesktop ? 32 : 24;
+    
+    return headerHeight + extraSpace;
+}
 
-  errorModal?.addEventListener("click", (event) => {
-    if (event.target === errorModal) {
-      window.closeErrorModal();
-    }
-  });
-});
+/**
+ * Визначає, чи увімкнено темний режим
+ */
+function isDarkMode() {
+    return document.documentElement.classList.contains('dark');
+}
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    window.closeSuccessModal();
-    window.closeErrorModal();
-  }
-});
+// ==================== ДИНАМІЧНИЙ OFFSET ЗАГОЛОВКА ====================
 
-document.addEventListener("DOMContentLoaded", () => {
-  const mobileMenuButton = document.getElementById("mobile-menu-button");
-  const mobileMenu = document.getElementById("mobile-menu");
+function initDynamicHeaderOffset() {
+    const header = document.querySelector('header');
 
-  if (mobileMenuButton && mobileMenu) {
-    mobileMenuButton.addEventListener("click", () => {
-      mobileMenu.classList.toggle("hidden");
-    });
-
-    document.addEventListener("click", (event) => {
-      const isMenuClick = mobileMenu.contains(event.target);
-      const isButtonClick = mobileMenuButton.contains(event.target);
-      if (!isMenuClick && !isButtonClick) {
-        mobileMenu.classList.add("hidden");
-      }
-    });
-  }
-
-  const navLinks = document.querySelectorAll('a[href^="#"]');
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      event.preventDefault();
-      const targetId = link.getAttribute("href").substring(1);
-      const targetElement = document.getElementById(targetId);
-
-      if (targetId === "contacts") {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth",
-        });
-      } else if (targetElement) {
-        const header = document.querySelector("header");
+    function updateHeaderOffset() {
         const headerHeight = header ? header.getBoundingClientRect().height : 80;
-        const cssOffset = getComputedStyle(document.documentElement).getPropertyValue(
-          "--header-offset"
-        );
-        const parsedOffset = parseFloat(cssOffset) || headerHeight + 32;
-        const offset = parsedOffset;
-        const elementPosition = targetElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+        const extraSpace = isDesktop ? 32 : 24;
+        const offset = Math.round(headerHeight + extraSpace);
+        document.documentElement.style.setProperty('--header-offset', offset + 'px');
+    }
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
+    updateHeaderOffset();
+
+    if ('ResizeObserver' in window && header) {
+        const resizeObserver = new ResizeObserver(() => updateHeaderOffset());
+        resizeObserver.observe(header);
+    }
+
+    window.addEventListener('resize', updateHeaderOffset);
+    window.addEventListener('orientationchange', updateHeaderOffset);
+}
+
+// ==================== ПОКРАЩЕНІ СЕЛЕКТИ ====================
+
+function initEnhancedSelects() {
+    const lightOptionColor = '#fcd34d';
+    const darkOptionColor = '#fde68a';
+    const placeholderLight = '#9ca3af';
+    const placeholderDark = '#6b7280';
+
+    const enhancedSelects = document.querySelectorAll('[data-enhanced-select]');
+
+    function closeAllSelects(except = null) {
+        enhancedSelects.forEach(container => {
+            if (container === except) return;
+            const trigger = container.querySelector('[data-select-trigger]');
+            const list = container.querySelector('[data-select-options]');
+            if (trigger && list) {
+                trigger.setAttribute('aria-expanded', 'false');
+                list.classList.add('hidden');
+                const icon = trigger.querySelector('svg');
+                if (icon) {
+                    icon.classList.remove('rotate-180');
+                }
+            }
         });
-      }
+    }
 
-      if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
-        mobileMenu.classList.add("hidden");
-      }
+    enhancedSelects.forEach(container => {
+        const select = container.querySelector('select');
+        if (!select || container.dataset.enhanced === 'true') return;
+        container.dataset.enhanced = 'true';
+
+        // Створення кнопки-тригера
+        const trigger = document.createElement('button');
+        trigger.type = 'button';
+        trigger.className = 'flex w-full h-11 items-center justify-between rounded-lg bg-gray-100 dark:bg-gray-800 border border-transparent px-4 text-left focus:outline-none focus:ring-2 focus:ring-primary';
+        trigger.setAttribute('data-select-trigger', '');
+        trigger.setAttribute('aria-haspopup', 'listbox');
+        trigger.setAttribute('aria-expanded', 'false');
+
+        const valueSpan = document.createElement('span');
+        valueSpan.setAttribute('data-select-value', '');
+        valueSpan.className = 'block truncate text-gray-400 dark:text-gray-500';
+        trigger.appendChild(valueSpan);
+
+        // Створення іконки стрілки
+        const caret = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        caret.setAttribute('viewBox', '0 0 24 24');
+        caret.setAttribute('fill', 'none');
+        caret.setAttribute('stroke', 'currentColor');
+        caret.setAttribute('stroke-width', '2');
+        caret.classList.add('ml-2', 'h-5', 'w-5', 'flex-shrink-0', 'text-[#fcd34d]', 'dark:text-[#fde68a]', 'transition-transform', 'duration-200');
+        const caretPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        caretPath.setAttribute('stroke-linecap', 'round');
+        caretPath.setAttribute('stroke-linejoin', 'round');
+        caretPath.setAttribute('d', 'M6 9l6 6 6-6');
+        caret.appendChild(caretPath);
+        trigger.appendChild(caret);
+
+        // Створення списку опцій
+        const list = document.createElement('ul');
+        list.className = 'absolute left-0 right-0 top-full z-20 mt-2 max-h-56 overflow-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 shadow-2xl hidden';
+        list.setAttribute('data-select-options', '');
+        list.setAttribute('role', 'listbox');
+
+        const options = Array.from(select.options);
+
+        options.forEach(option => {
+            if (option.disabled && option.hidden) {
+                return;
+            }
+
+            const item = document.createElement('li');
+            item.setAttribute('role', 'option');
+            item.setAttribute('data-option-value', option.value);
+            item.className = 'px-4 py-2 cursor-pointer text-[#fcd34d] dark:text-[#fde68a] hover:bg-primary/10 focus:bg-primary/10 focus:outline-none transition-colors duration-150';
+            item.textContent = option.textContent;
+
+            item.addEventListener('click', () => {
+                select.value = option.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                updateDisplay();
+                closeAllSelects();
+            });
+
+            item.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    item.click();
+                }
+            });
+
+            list.appendChild(item);
+        });
+
+        container.appendChild(trigger);
+        container.appendChild(list);
+
+        function updateDisplay() {
+            const currentOption = select.options[select.selectedIndex];
+            const isPlaceholder = !currentOption || currentOption.disabled || currentOption.value === '';
+            const optionColor = isDarkMode() ? darkOptionColor : lightOptionColor;
+            const placeholderColor = isDarkMode() ? placeholderDark : placeholderLight;
+
+            valueSpan.textContent = currentOption ? currentOption.textContent : '';
+            if (isPlaceholder) {
+                valueSpan.className = 'block truncate text-gray-400 dark:text-gray-500';
+            } else {
+                valueSpan.className = 'block truncate font-medium text-[#fcd34d] dark:text-[#fde68a]';
+            }
+
+            Array.from(list.children).forEach(item => {
+                if (item.getAttribute('data-option-value') === select.value) {
+                    item.classList.add('bg-primary/10');
+                } else {
+                    item.classList.remove('bg-primary/10');
+                }
+            });
+
+            if (isPlaceholder) {
+                select.style.color = placeholderColor;
+            } else {
+                select.style.color = optionColor;
+            }
+        }
+
+        trigger.addEventListener('click', event => {
+            event.preventDefault();
+            const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+            if (isOpen) {
+                trigger.setAttribute('aria-expanded', 'false');
+                list.classList.add('hidden');
+                caret.classList.remove('rotate-180');
+            } else {
+                closeAllSelects(container);
+                trigger.setAttribute('aria-expanded', 'true');
+                list.classList.remove('hidden');
+                caret.classList.add('rotate-180');
+            }
+        });
+
+        select.addEventListener('change', updateDisplay);
+        updateDisplay();
+        select.classList.add('hidden');
+
+        // Спостереження за зміною теми
+        const themeObserver = new MutationObserver(updateDisplay);
+        themeObserver.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
     });
-  });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("image-modal");
-  const modalImage = document.getElementById("modal-image");
-  const closeModal = document.getElementById("close-modal");
-  const prevButton = document.getElementById("prev-image");
-  const nextButton = document.getElementById("next-image");
-  const gallerySection = document.getElementById("gallery");
-
-  if (!modal || !modalImage || !closeModal || !prevButton || !nextButton || !gallerySection) {
-    return;
-  }
-
-  const photoElements = gallerySection.querySelectorAll(".group .bg-cover");
-  const imageUrls = [];
-  let currentImageIndex = 0;
-
-  const extractImageUrl = (backgroundImage) => {
-    const match = backgroundImage.match(/url\((['"]?)(.*?)\1\)/);
-    return match ? match[2] : "";
-  };
-
-  photoElements.forEach((photoElement) => {
-    photoElement.style.cursor = "pointer";
-    const backgroundImage = getComputedStyle(photoElement).backgroundImage || "";
-    const imageUrl = extractImageUrl(backgroundImage);
-    if (imageUrl) {
-      imageUrls.push(imageUrl);
-    }
-  });
-
-  const showImage = (index) => {
-    if (index < 0 || index >= imageUrls.length) return;
-    currentImageIndex = index;
-    modalImage.src = imageUrls[currentImageIndex];
-    prevButton.style.display = currentImageIndex > 0 ? "flex" : "none";
-    nextButton.style.display =
-      currentImageIndex < imageUrls.length - 1 ? "flex" : "none";
-  };
-
-  photoElements.forEach((photoElement, index) => {
-    photoElement.addEventListener("click", () => {
-      if (!imageUrls.length) return;
-      modal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
-      showImage(index);
+    // Закриття при кліку поза селектом
+    document.addEventListener('click', event => {
+        const targetContainer = event.target.closest('[data-enhanced-select]');
+        closeAllSelects(targetContainer || null);
     });
-  });
 
-  prevButton.addEventListener("click", () => {
-    if (currentImageIndex > 0) {
-      showImage(currentImageIndex - 1);
+    // Закриття при натисканні Escape
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            closeAllSelects();
+        }
+    });
+}
+
+// ==================== МОБІЛЬНЕ МЕНЮ ====================
+
+function initMobileMenu() {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+
+    if (!menuButton || !menu) return;
+
+    // Перемикання меню
+    menuButton.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+    });
+
+    // Закриття при кліку поза меню
+    document.addEventListener('click', event => {
+        if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+}
+
+// ==================== ПЛАВНА ПРОКРУТКА ====================
+
+function initSmoothScrolling() {
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetId === 'contacts') {
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            } else if (targetElement) {
+                const offset = getHeaderOffset();
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+
+            // Закриття мобільного меню після кліку
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    });
+}
+
+// ==================== МОДАЛЬНІ ВІКНА ====================
+
+function showSuccessModal() {
+    const modal = document.getElementById('successModal');
+    const content = document.getElementById('successModalContent');
+    if (!modal || !content) return;
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
+}
+
+function closeSuccessModal() {
+    const modal = document.getElementById('successModal');
+    const content = document.getElementById('successModalContent');
+    if (!modal || !content) return;
+
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }, 200);
+}
+
+function showErrorModal() {
+    const modal = document.getElementById('errorModal');
+    const content = document.getElementById('errorModalContent');
+    if (!modal || !content) return;
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    setTimeout(() => {
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+    }, 10);
+}
+
+function closeErrorModal() {
+    const modal = document.getElementById('errorModal');
+    const content = document.getElementById('errorModalContent');
+    if (!modal || !content) return;
+
+    content.classList.remove('scale-100');
+    content.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }, 200);
+}
+
+function initModalHandlers() {
+    // Закриття модальних вікон при кліку поза ними
+    const successModal = document.getElementById('successModal');
+    const errorModal = document.getElementById('errorModal');
+
+    if (successModal) {
+        successModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSuccessModal();
+            }
+        });
     }
-  });
 
-  nextButton.addEventListener("click", () => {
-    if (currentImageIndex < imageUrls.length - 1) {
-      showImage(currentImageIndex + 1);
+    if (errorModal) {
+        errorModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeErrorModal();
+            }
+        });
     }
-  });
 
-  const closeGalleryModal = () => {
-    modal.classList.add("hidden");
-    document.body.style.overflow = "auto";
-  };
+    // Закриття модальних вікон клавішею Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeSuccessModal();
+            closeErrorModal();
+        }
+    });
+}
 
-  closeModal.addEventListener("click", closeGalleryModal);
+// Експорт функцій для використання в HTML (onclick)
+window.closeSuccessModal = closeSuccessModal;
+window.closeErrorModal = closeErrorModal;
 
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      closeGalleryModal();
+// ==================== ФОРМА ЗАЯВКИ ====================
+
+function initApplicationForm() {
+    const form = document.getElementById('applicationForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const successModal = document.getElementById('successModal');
+        const errorModal = document.getElementById('errorModal');
+        const submitButton = e.target.querySelector('button[type="submit"]');
+
+        if (!submitButton) return;
+
+        // Приховуємо попередні модальні вікна
+        if (successModal) successModal.classList.add('hidden');
+        if (errorModal) errorModal.classList.add('hidden');
+
+        // Блокуємо кнопку та показуємо індикатор завантаження
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<span class="truncate">Відправляється...</span>';
+
+        // Отримуємо дані форми
+        const formDataRaw = new FormData(e.target);
+
+        // Формуємо об'єкт для EmailJS
+        const templateParams = {
+            user_name: formDataRaw.get('user_name'),
+            user_phone: formDataRaw.get('user_phone'),
+            user_age: formDataRaw.get('user_age'),
+            user_status: formDataRaw.get('user_status'),
+            user_rank: formDataRaw.get('user_rank'),
+            user_comment: formDataRaw.get('user_comment')
+        };
+
+        console.log('Відправляємо дані:', templateParams);
+
+        // Отримуємо змінні середовища
+        // Замініть на ваші реальні значення або використовуйте window.EMAILJS_SERVICE_ID і window.EMAILJS_TEMPLATE_ID
+        const serviceId = window.EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
+        const templateId = window.EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
+
+        if (!serviceId || serviceId === 'YOUR_SERVICE_ID' || !templateId || templateId === 'YOUR_TEMPLATE_ID') {
+            console.error('Відсутні налаштування EmailJS. Будь ласка, налаштуйте змінні в script.js');
+            showErrorModal();
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+            return;
+        }
+
+        // Відправляємо через EmailJS
+        emailjs.send(serviceId, templateId, templateParams)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                showSuccessModal();
+                form.reset();
+            })
+            .catch(function(error) {
+                console.error('FAILED...', error);
+                showErrorModal();
+            })
+            .finally(function() {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            });
+    });
+}
+
+// ==================== ГАЛЕРЕЯ ФОТО ====================
+
+function initPhotoGallery() {
+    const modal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image');
+    const closeModal = document.getElementById('close-modal');
+    const prevButton = document.getElementById('prev-image');
+    const nextButton = document.getElementById('next-image');
+
+    if (!modal || !modalImage || !closeModal || !prevButton || !nextButton) return;
+
+    const gallerySection = document.getElementById('gallery');
+    if (!gallerySection) return;
+
+    const photoElements = gallerySection.querySelectorAll('.group .bg-cover');
+
+    let imageUrls = [];
+    let currentImageIndex = 0;
+
+    // Збираємо URL всіх фото
+    photoElements.forEach(photoElement => {
+        photoElement.style.cursor = 'pointer';
+        const backgroundImage = photoElement.style.backgroundImage;
+        const imageUrl = backgroundImage.replace('url("', '').replace('")', '');
+        imageUrls.push(imageUrl);
+    });
+
+    function showImage(index) {
+        if (index >= 0 && index < imageUrls.length) {
+            currentImageIndex = index;
+            modalImage.src = imageUrls[currentImageIndex];
+
+            prevButton.style.display = currentImageIndex > 0 ? 'flex' : 'none';
+            nextButton.style.display = currentImageIndex < imageUrls.length - 1 ? 'flex' : 'none';
+        }
     }
-  });
 
-  document.addEventListener("keydown", (event) => {
-    if (modal.classList.contains("hidden")) return;
-    if (event.key === "Escape") {
-      closeGalleryModal();
-    } else if (event.key === "ArrowLeft" && currentImageIndex > 0) {
-      showImage(currentImageIndex - 1);
-    } else if (event.key === "ArrowRight" && currentImageIndex < imageUrls.length - 1) {
-      showImage(currentImageIndex + 1);
-    }
-  });
-});
+    // Відкриття модального вікна при кліку на фото
+    photoElements.forEach((photoElement, index) => {
+        photoElement.addEventListener('click', function() {
+            currentImageIndex = index;
+            showImage(currentImageIndex);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const videoCarousel = document.getElementById("video-carousel");
-  const prevVideoBtn = document.getElementById("prev-video");
-  const nextVideoBtn = document.getElementById("next-video");
+    // Навігація кнопками
+    prevButton.addEventListener('click', () => {
+        if (currentImageIndex > 0) {
+            showImage(currentImageIndex - 1);
+        }
+    });
 
-  if (videoCarousel && prevVideoBtn && nextVideoBtn) {
+    nextButton.addEventListener('click', () => {
+        if (currentImageIndex < imageUrls.length - 1) {
+            showImage(currentImageIndex + 1);
+        }
+    });
+
+    // Закриття модального вікна
+    closeModal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    });
+
+    // Закриття при кліку поза фото
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Клавіатурна навігація
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('hidden')) {
+            if (e.key === 'Escape') {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            } else if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
+                showImage(currentImageIndex - 1);
+            } else if (e.key === 'ArrowRight' && currentImageIndex < imageUrls.length - 1) {
+                showImage(currentImageIndex + 1);
+            }
+        }
+    });
+}
+
+// ==================== ВІДЕО КАРУСЕЛЬ ====================
+
+function initVideoCarousel() {
     let currentVideoSlide = 0;
-    const visibleItems = 3;
-    const totalItems = videoCarousel.children.length;
-    const maxSlide = Math.max(0, Math.ceil(totalItems / visibleItems) - 1);
+    const videoCarousel = document.getElementById('video-carousel');
+    const prevVideoBtn = document.getElementById('prev-video');
+    const nextVideoBtn = document.getElementById('next-video');
 
-    const updateCarousel = () => {
-      const offset = currentVideoSlide * (100 / visibleItems);
-      videoCarousel.style.transform = `translateX(-${offset}%)`;
-    };
+    if (!prevVideoBtn || !nextVideoBtn || !videoCarousel) return;
 
-    prevVideoBtn.addEventListener("click", () => {
-      if (currentVideoSlide > 0) {
-        currentVideoSlide -= 1;
-        updateCarousel();
-      }
+    prevVideoBtn.addEventListener('click', () => {
+        if (currentVideoSlide > 0) {
+            currentVideoSlide--;
+            videoCarousel.style.transform = `translateX(-${currentVideoSlide * 33.333}%)`;
+        }
     });
 
-    nextVideoBtn.addEventListener("click", () => {
-      if (currentVideoSlide < maxSlide) {
-        currentVideoSlide += 1;
-        updateCarousel();
-      }
+    nextVideoBtn.addEventListener('click', () => {
+        if (currentVideoSlide < 1) {
+            currentVideoSlide++;
+            videoCarousel.style.transform = `translateX(-${currentVideoSlide * 33.333}%)`;
+        }
     });
-  }
+}
 
-  document.querySelectorAll(".faq-question").forEach((button) => {
-    button.addEventListener("click", () => {
-      const answer = button.nextElementSibling;
-      const icon = button.querySelector(".faq-icon");
-      const isOpen = answer && !answer.classList.contains("hidden");
+// ==================== FAQ АКОРДЕОН ====================
 
-      document.querySelectorAll(".faq-answer").forEach((item) => {
-        if (item !== answer) {
-          item.classList.add("hidden");
-        }
-      });
+function initFAQAccordion() {
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.faq-icon');
+            const isOpen = !answer.classList.contains('hidden');
 
-      document.querySelectorAll(".faq-icon").forEach((item) => {
-        if (item !== icon) {
-          item.classList.remove("rotate-180");
-        }
-      });
+            // Закриваємо всі інші відповіді
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                if (item !== answer) {
+                    item.classList.add('hidden');
+                }
+            });
+            document.querySelectorAll('.faq-icon').forEach(item => {
+                if (item !== icon) {
+                    item.classList.remove('rotate-180');
+                }
+            });
 
-      if (answer && icon) {
-        if (isOpen) {
-          answer.classList.add("hidden");
-          icon.classList.remove("rotate-180");
-        } else {
-          answer.classList.remove("hidden");
-          icon.classList.add("rotate-180");
-        }
-      }
+            // Перемикаємо поточну відповідь
+            if (isOpen) {
+                answer.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            } else {
+                answer.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            }
+        });
     });
-  });
+}
+
+// ==================== ІНІЦІАЛІЗАЦІЯ ====================
+
+// Ініціалізуємо динамічний offset заголовка до завантаження DOM
+(function() {
+    document.addEventListener('DOMContentLoaded', initDynamicHeaderOffset);
+})();
+
+// Головна функція ініціалізації
+document.addEventListener('DOMContentLoaded', function() {
+    // Ініціалізація всіх компонентів
+    initEnhancedSelects();
+    initMobileMenu();
+    initSmoothScrolling();
+    initModalHandlers();
+    initApplicationForm();
+    initPhotoGallery();
+    initVideoCarousel();
+    initFAQAccordion();
+
+    console.log('Всі скрипти успішно ініціалізовані');
 });
