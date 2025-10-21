@@ -67,6 +67,9 @@ body {
     .about-banner-secondary {
         background-image: url("photos/2025-10-09_16h09_10-mobile.png") !important;
     }
+    .vacancies-highlight {
+        background-image: url('photos/IMG_20251021_142456_955~3.png') !important;
+    }
 }
 
 .about-banner-tertiary {
