@@ -544,19 +544,54 @@ function initVideoCarousel() {
 
     if (!prevVideoBtn || !nextVideoBtn || !videoCarousel) return;
 
+    function updateCarousel() {
+        if (window.innerWidth >= 768) {
+            videoCarousel.style.transform = `translateX(-${currentVideoSlide * 33.333}%)`;
+        }
+    }
+
     prevVideoBtn.addEventListener('click', () => {
         if (currentVideoSlide > 0) {
             currentVideoSlide--;
-            videoCarousel.style.transform = `translateX(-${currentVideoSlide * 33.333}%)`;
+            updateCarousel();
         }
     });
 
     nextVideoBtn.addEventListener('click', () => {
         if (currentVideoSlide < 1) {
             currentVideoSlide++;
-            videoCarousel.style.transform = `translateX(-${currentVideoSlide * 33.333}%)`;
+            updateCarousel();
         }
     });
+
+    // Touch events only for desktop
+    if (window.innerWidth >= 768) {
+        let startX = 0;
+        let endX = 0;
+
+        videoCarousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        videoCarousel.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+
+            if (Math.abs(diffX) > 50) { // Minimum swipe distance
+                if (diffX > 0) { // Swipe left
+                    if (currentVideoSlide < 3) {
+                        currentVideoSlide++;
+                        updateCarousel();
+                    }
+                } else { // Swipe right
+                    if (currentVideoSlide > 0) {
+                        currentVideoSlide--;
+                        updateCarousel();
+                    }
+                }
+            }
+        });
+    }
 }
 
 // ==================== FAQ АКОРДЕОН ====================

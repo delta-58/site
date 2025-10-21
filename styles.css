@@ -104,3 +104,21 @@ body {
 #video-carousel {
     width: 133.333%;
 }
+
+@media (max-width: 767px) {
+    .relative.overflow-hidden:has(#video-carousel) {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+    }
+    #video-carousel {
+        width: auto;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+    #video-carousel > div {
+        scroll-snap-align: start;
+        flex-shrink: 0;
+        width: 100vw; /* Full viewport width for mobile */
+    }
+}
