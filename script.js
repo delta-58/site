@@ -466,8 +466,8 @@ function initPhotoGallery() {
 
     // Збираємо URL всіх фото
     photoElements.forEach(photoElement => {
-        photoElement.style.cursor = 'pointer';
-        const backgroundImage = photoElement.style.backgroundImage;
+        photoElement.style.cursor = window.innerWidth >= 768 ? 'pointer' : 'default';
+        const backgroundImage = getComputedStyle(photoElement).backgroundImage;
         const imageUrl = backgroundImage.replace('url("', '').replace('")', '');
         imageUrls.push(imageUrl);
     });
@@ -482,15 +482,17 @@ function initPhotoGallery() {
         }
     }
 
-    // Відкриття модального вікна при кліку на фото
-    photoElements.forEach((photoElement, index) => {
-        photoElement.addEventListener('click', function() {
-            currentImageIndex = index;
-            showImage(currentImageIndex);
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+    // Відкриття модального вікна при кліку на фото (тільки на десктопі)
+    if (window.innerWidth >= 768) {
+        photoElements.forEach((photoElement, index) => {
+            photoElement.addEventListener('click', function() {
+                currentImageIndex = index;
+                showImage(currentImageIndex);
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
         });
-    });
+    }
 
     // Навігація кнопками
     prevButton.addEventListener('click', () => {
