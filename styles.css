@@ -63,6 +63,12 @@ body {
     background-image: url("photos/2025-10-09_16h09_10.png");
 }
 
+@media (max-width: 640px) {
+    .about-banner-secondary {
+        background-image: url("photos/2025-10-09_16h09_10-mobile.png") !important;
+    }
+}
+
 .about-banner-tertiary {
     background-image: url("photos/2025-10-09_16h09_21.png");
 }
