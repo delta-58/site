@@ -39,7 +39,7 @@ body {
 }
 
 .dark body {
-    background-image: linear-gradient(rgba(33, 17, 17, 0), rgba(33, 17, 17, 0)), url('photos/2025-10-09_16h08_22.png') !important;
+    background-image: linear-gradient(rgba(33, 17, 17, 0), rgba(33, 17, 17, 0)), url('photos/2025-10-09_16h08_22.webp') !important;
 }
 
 .hero-banner,
@@ -52,56 +52,56 @@ body {
 }
 
 .hero-banner {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("photos/2025-10-09_16h08_22.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.6) 100%), url("photos/2025-10-09_16h08_22.webp");
 }
 
 .about-banner-primary {
-    background-image: url("photos/WhatsApp Image 2025-10-10 at 12.33.12.jpeg");
+    background-image: url("photos/WhatsApp Image 2025-10-10 at 12.33.12.webp");
 }
 
 .about-banner-secondary {
-    background-image: url("photos/2025-10-09_16h09_10.png");
+    background-image: url("photos/2025-10-09_16h09_10.webp");
 }
 
 @media (max-width: 640px) {
     .about-banner-secondary {
-        background-image: url("photos/2025-10-09_16h09_10-mobile.png") !important;
+        background-image: url("photos/2025-10-09_16h09_10-mobile.webp") !important;
     }
     .vacancies-highlight {
-        background-image: url('photos/IMG_20251021_142456_955~3.png') !important;
+        background-image: url('photos/IMG_20251021_142456_955~3.webp') !important;
     }
 }
 
 .about-banner-tertiary {
-    background-image: url("photos/2025-10-09_16h09_21.png");
+    background-image: url("photos/2025-10-09_16h09_21.webp");
 }
 
 .advantage-image-one {
-    background-image: url("photos/2025-10-09_16h11_12.png");
+    background-image: url("photos/2025-10-09_16h11_12.webp");
 }
 
 .advantage-image-two {
-    background-image: url("photos/2025-10-09_16h09_33.png");
+    background-image: url("photos/2025-10-09_16h09_33.webp");
 }
 
 .advantage-image-three {
-    background-image: url("photos/2025-10-09_16h10_26.png");
+    background-image: url("photos/2025-10-09_16h10_26.webp");
 }
 
 .advantage-image-four {
-    background-image: url("photos/2025-10-09_16h10_33.png");
+    background-image: url("photos/2025-10-09_16h10_33.webp");
 }
 
 .advantage-image-five {
-    background-image: url("photos/2025-10-09_16h10_41.png");
+    background-image: url("photos/2025-10-09_16h10_41.webp");
 }
 
 .advantage-image-six {
-    background-image: url("photos/2025-10-09_16h10_52.png");
+    background-image: url("photos/2025-10-09_16h10_52.webp");
 }
 
 .vacancies-highlight {
-    background-image: url('photos/2025-10-09_16h11_39.png');
+    background-image: url('photos/2025-10-09_16h11_39.webp');
 }
 
 #video-carousel {
