@@ -122,3 +122,40 @@ body {
         width: 100vw; /* Full viewport width for mobile */
     }
 }
+
+@media (max-width: 768px) {
+    /* Contacts section tweaks for narrow screens */
+    .contact-card {
+        padding: 1.75rem;
+        margin-inline: auto;
+        max-width: min(92vw, 420px);
+    }
+    .contact-emblem {
+        display: none;
+    }
+    .contact-socials {
+        padding: 1.75rem;
+    }
+    .contact-social-links {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.1rem;
+        justify-items: center;
+    }
+    .contact-social-links > a {
+        justify-content: center;
+        text-align: center;
+    }
+    .contact-social-icon {
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+    }
+    .contact-social-icon svg {
+        width: 1.9rem;
+        height: 1.9rem;
+    }
+    .contact-social-links span {
+        margin-top: 0.6rem;
+        font-size: 0.8rem;
+    }
+}
