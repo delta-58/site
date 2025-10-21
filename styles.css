@@ -126,7 +126,7 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     /* Contacts section tweaks for narrow screens */
     .contact-card {
         padding: 1.75rem;
