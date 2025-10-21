@@ -136,6 +136,13 @@ body {
     .contact-socials {
         padding: 1.75rem;
     }
+    .apply-container {
+        max-width: min(92vw, 420px);
+    }
+    .apply-card {
+        margin-inline: auto;
+        max-width: min(92vw, 420px);
+    }
     .contact-social-links {
         display: grid !important;
         grid-template-columns: repeat(3, minmax(0, 1fr));
