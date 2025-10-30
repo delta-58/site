@@ -32,14 +32,27 @@ body {
 }
 
 body {
-    background-image: linear-gradient(rgba(248, 246, 246, 0.3), rgba(248, 246, 246, 0.3)), url('photos/2025-10-09_16h08_22.png');
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(248, 246, 246, 0.3), rgba(248, 246, 246, 0.3)), url('photos/background.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    filter: blur(5px);
+    z-index: -1;
 }
 
-.dark body {
-    background-image: linear-gradient(rgba(33, 17, 17, 0), rgba(33, 17, 17, 0)), url('photos/2025-10-09_16h08_22.webp') !important;
+.dark body::before {
+    background-image: linear-gradient(rgba(33, 17, 17, 0), rgba(33, 17, 17, 0)), url('photos/background.webp');
+    filter: blur(5px);
 }
 
 .hero-banner,
